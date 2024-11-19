@@ -33,7 +33,7 @@ app.get("/", (req,res) => {
         <p><b>A+B:</b> <span id=answer></span>
 
     </body>
-    <script src="scripts/client.js"></script>
+    <script src="public/client.js"></script>
 </html>`)
 });
 
