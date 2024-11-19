@@ -38,7 +38,7 @@ app.get("/", (req,res) => {
 });
 
 
-
+app.use(express.static("public"));
 
 app.listen(port,host, () =>
  console.log(`Example app listening at http://${host}:${port}`))
