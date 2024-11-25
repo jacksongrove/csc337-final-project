@@ -27,6 +27,16 @@ function update_answer() {
 const board = document.getElementById('board');
 const status = document.getElementById('status');
 
+// Periodically poll server
+// TODO this is only temporary. It's better to have the server somehow
+// send an event to the client instead of periodically asking.
+setInterval(() => {
+    // Only poll it the board and status exist
+    if (board != null && status != null){
+        onGameStateUpdate();
+    }
+}, 1000);
+
 async function fetchGameState() {
     const response = await fetch('/state');
     const data = await response.json();
@@ -66,4 +76,10 @@ async function resetGame() {
     fetchGameState();
 }
 
-fetchGameState();
+async function onGameStateUpdate(){
+    fetchGameState();
+}
+
+if (board != null && status != null){
+    fetchGameState();
+}
