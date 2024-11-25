@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link id="cssFile" rel="stylesheet" type="text/css" href="tictactoe.css">
+</head>
+<body>
+    <!-- Title -->
+    <h1>Sign in</h1>
+    <!-- Send new user information using POST. This cannot be done
+    securely until we implement https and use https before sending a
+    form request. -->
+    <form action="/signup" method="POST">
+        <!-- Name input -->
+        <div>
+            <span>name:</span>
+            <span>
+                <input id="name" required name="name" type="text">
+            </span>
+        </div>
+        <!-- Username input -->
+        <div>
+            <span>username:</span>
+            <span>
+                <input id="username" required name="username" type="text">
+            </span>
+        </div>
+        <!-- Authentication input -->
+        <div>
+            <span>secret animal (not password or secure):</span>
+            <span>
+                <input id="auth" required name="auth" type="password">
+            </span>
+        </div>
+        <!-- Authentication input -->
+        <div>
+            <span>secret animal again (not password or secure):</span>
+            <span>
+                <input id="authAgain" required name="authAgain" type="password">
+            </span>
+        </div>
+        <input type="submit"></button>
+    </form>
+    <button onclick="location.href='login.html'">Log in instead</button>
+    <!-- Handle accept and reject scenario -->
+
+    <!-- placeholders -->
+    <div></div>
+    <button onclick="location.href='signup.html'">go to signup</button>
+    <button onclick="location.href='login.html'">go to login</button>
+    <button onclick="location.href='index.html'">go to game</button>
+    <button onclick="location.href='lobby.html'">go to lobby</button>
+    <button onclick="location.href='leaderboard.html'">go to leaderboard</button>
+    
+    <script src="client.js"></script>
+</body>
+</html>

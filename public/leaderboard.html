@@ -7,10 +7,28 @@
     <link id="cssFile" rel="stylesheet" type="text/css" href="tictactoe.css">
 </head>
 <body>
-    <h1>Tic-Tac-Toe</h1>
-    <div class="board" id="board"></div>
-    <div id="status">Loading...</div>
-    <button onclick="resetGame()">Reset Game</button>
+    <h1>Leaderboard</h1>
+    
+    <!-- Table of players, replace with buttons -->
+    <table>
+        <tr>
+            <th scope="col">Player Name</th>
+            <th scope="col"> Win:loss</th>
+        </tr>
+        <tr>
+            <th scope="row">Player 1</th>
+            <td>3.0</td>
+        </tr>
+        <tr>
+            <th scope="row">Player 2</th>
+            <td>1.0</td>
+        </tr>
+        <tr>
+            <th scope="row">Player 3</th>
+            <td>0.5</td>
+        </tr>
+    </table>
+    <button onclick="location.href='lobby.html'">Lobby</button>
 
     <!-- placeholders -->
     <div></div>
