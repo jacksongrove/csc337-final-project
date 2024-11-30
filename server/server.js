@@ -7,6 +7,7 @@ const host = "localhost";
 
 app.use(express.static('public'))
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 // Import routes
 const gameRoutes = require('./routes/game');
@@ -16,6 +17,7 @@ const gameRoutes = require('./routes/game');
 app.use('/game', gameRoutes);
 // app.use('/auth', authRoutes);
 
+let users = new Set()
 
 // POST /signup
 app.post('/signup', (req, res) => {
@@ -38,7 +40,7 @@ app.post('/signup', (req, res) => {
 
 // POST /login
 app.post('/login', (req, res) => {
-    const { username } = req.body;
+    const { username, auth } = req.body;
 
     // Validate input
     if (!username) {
