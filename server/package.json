@@ -1,4 +1,7 @@
 {
+  "name": "tic-tac-toe-online",
+  "version": "0.0.1",
+  "main": "server.js",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^4.21.1",
