@@ -53,10 +53,6 @@ async function resetGame() {
     fetchGameState();
 }
 
-async function onGameStateUpdate(){
-    fetchGameState();
-}
-
 // This only runs once, though it should run whenever there is a change. Or
 // maybe it gets scrapped entirely.
 async function getAvailableGames(){
@@ -97,7 +93,7 @@ function handleGameSelection() {
         console.log(`User selected game: ${selectedGameKey}`);
         // Perform further actions, e.g., join the game or fetch game details
         selectedGame = selectedGameKey
-        
+        fetchGameState();
     } else {
         console.log("No game selected.");
     }
