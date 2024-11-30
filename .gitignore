@@ -1,4 +1,2 @@
-server/package.json
 server/package-lock.json
 server/node_modules
-/.vscode/
