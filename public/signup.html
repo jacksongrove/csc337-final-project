@@ -29,16 +29,16 @@
         </div>
         <!-- Authentication input -->
         <div>
-            <span>secret animal (not password or secure):</span>
+            <span>password (secure):</span>
             <span>
-                <input id="auth" required name="auth" type="password">
+                <input id="password" required name="password" type="password" oninput="checkMatchingPassword()">
             </span>
         </div>
         <!-- Authentication input -->
         <div>
-            <span>secret animal again (not password or secure):</span>
+            <span>password again (secure):</span>
             <span>
-                <input id="authAgain" required name="authAgain" type="password">
+                <input id="passwordAgain" required name="passwordAgain" type="password" oninput="checkMatchingPassword()">
             </span>
         </div>
         <input type="submit"></button>
