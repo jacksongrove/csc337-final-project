@@ -4,3 +4,4 @@
 11/24 - 1.5 hour implementing template pages and synchronizing game between two players
 11/29 - 0.5 hours researching Server-Side Events (and implementing a template)
 11/29 - 2 hour reorganizing and refactoring
+11/29 - 2 hours implementing https with secure login/signup with hashed passwords
