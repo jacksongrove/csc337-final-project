@@ -6,3 +6,4 @@
 11/29 - 2 hour reorganizing and refactoring
 11/29 - 2 hours implementing https with secure login/signup with hashed passwords
 11/29 - 1 hour researching integrating mongodb into development environments
+11/29 - 0.5 hours reviewing code and documenting
