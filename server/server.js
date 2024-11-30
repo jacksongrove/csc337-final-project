@@ -8,9 +8,11 @@ const host = "localhost";
 // const host = "0.0.0.0"
 
 // Load the self-signed certificate and private key
+// Cannot load without certificate since passwords require https which then
+// requires a certificate.
 const sslOptions = {
-    key: fs.readFileSync('server/server.key'),
-    cert: fs.readFileSync('server/server.cert')
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
 };
 
 app.use(express.static('public'))
@@ -25,6 +27,9 @@ const authRoutes = require('./routes/auth');
 app.use('/game', gameRoutes);
 app.use('/auth', authRoutes);
 
+// Use HTTPS instead. This will require a certificate. For now we can just make
+// one up using:
+// $ openssl req -nodes -new -x509 -keyout server.key -out server.cert
 https.createServer(sslOptions, app).listen(port, host, () => {
     console.log(`Example app listening at https://${host}:${port}`);
 });
