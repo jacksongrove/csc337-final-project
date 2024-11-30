@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // Import routes
 const gameRoutes = require('./routes/game');
 const authRoutes = require('./routes/auth');
+const db = require('./db');
 
 // Use routes
 app.use('/game', gameRoutes);
