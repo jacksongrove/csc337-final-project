@@ -31,9 +31,10 @@ app.use('/auth', authRoutes);
 // Use HTTPS instead. This will require a certificate. For now we can just make
 // one up using:
 // $ openssl req -nodes -new -x509 -keyout server.key -out server.cert
+// openssl isn't normally on windows so either:
+// * use WSL
+// * use "C:\Program Files\Git\usr\bin\openssl.exe" (easiest option)
+// or install it and add it to PATH
 https.createServer(sslOptions, app).listen(port, host, () => {
     console.log(`Example app listening at https://${host}:${port}`);
 });
-
-// app.listen(port,host, () =>
-//  console.log(`Example app listening at http://${host}:${port}`))

@@ -1,3 +1,4 @@
+// Works during the lifespan of the process. Not currently connected to DB
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');

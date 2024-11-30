@@ -1,4 +1,7 @@
-
+// GameState representing the game. All logic should be done here. This means that
+// the server does not need to keep track of the game rules and logic, instead it
+// should focus on serving requests. This class only simulates the game and contains
+// the state data of the game (but not the users themselves).
 class GameState {
     constructor() {
         this.reset();
