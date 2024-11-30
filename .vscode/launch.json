@@ -14,7 +14,7 @@
             "program": "${workspaceFolder}/server/server.js",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
-            "preLaunchTask": "npm install",
+            "preLaunchTask": "Prepare Server",
             "killProcessOnExit": true // Ensures the server process is killed when debugging stops
         }
     ]

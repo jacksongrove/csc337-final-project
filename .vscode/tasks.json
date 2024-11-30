@@ -1,3 +1,5 @@
+// Requirements npm
+// Tasks are done assuming a Unix shell with basic capabilities such as npm and openssl.
 {
     "version": "2.0.0",
     "tasks": [
@@ -7,6 +9,34 @@
             "command": "cd server; npm install",
             "problemMatcher": [],
             "detail": "Ensure all npm dependencies are installed."
-        }
+        },
+        {
+            "label": "Generate SSL Certificate",
+            "type": "shell",
+            "command": "if [ ! -f server.key ] || [ ! -f server.cert ]; then openssl req -nodes -new -x509 -keyout server.key -out server.cert; fi",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [],
+            "detail": "Generate SSL certificate if not found"
+        },
+        {
+            "label": "Check All Requirements",
+            "type": "shell",
+            "command": "command -v openssl &> /dev/null || { echo 'openssl could not be found'; exit 1; }; command -v node &> /dev/null || { echo 'node could not be found'; exit 1; }; command -v npm &> /dev/null || { echo 'npm could not be found'; exit 1; }",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [],
+            "detail": "Check if openssl, node, and npm are installed and available in PATH"
+        },
+        {
+            "label": "Prepare Server",
+            "dependsOn": [
+                "npm install"
+            ]
+        },
     ]
 }
