@@ -1,0 +1,6 @@
+11/21 - 2 hours programming prototype from templates
+11/21 - 6 hours planning and coordinating project and brainstorming
+11/24 - 1 hour sketching and brainstorming layout of pages and communication between
+11/24 - 1.5 hour implementing template pages and synchronizing game between two players
+11/29 - 0.5 hours researching Server-Side Events (and implementing a template)
+11/29 - 2 hour reorganizing and refactoring
