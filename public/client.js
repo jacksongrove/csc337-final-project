@@ -40,7 +40,7 @@ setInterval(() => {
 }, 1000);
 
 async function fetchGameState() {
-    const response = await fetch('/state/' + selectedGame);
+    const response = await fetch('/game/state/' + selectedGame);
     const data = await response.json();
     updateUI(data);
 }
@@ -59,7 +59,7 @@ function updateUI({ gameState, currentPlayer, gameActive }) {
 }
 
 async function makeMove(index) {
-    const response = await fetch('/move/' + selectedGame, {
+    const response = await fetch('/game/move/' + selectedGame, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ index })
@@ -74,7 +74,7 @@ async function makeMove(index) {
 }
 
 async function resetGame() {
-    await fetch('/reset/' + selectedGame, { method: 'POST' });
+    await fetch('/game/reset/' + selectedGame, { method: 'POST' });
     fetchGameState();
 }
 
@@ -131,3 +131,16 @@ function handleGameSelection() {
 if (board != null && status != null){
     fetchGameState();
 }
+
+// Just slap this on for now
+// TODO integrate this properly
+const eventSource = new EventSource('/game/events');
+
+eventSource.onmessage = (event) => {
+    console.log('Update received:', event.data);
+    fetchGameState(); // Update the UI
+};
+
+eventSource.onerror = (error) => {
+    console.error('SSE error:', error);
+};
