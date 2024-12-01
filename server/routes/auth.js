@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Generated using `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+// Aaaaaand this key is invalid. I'm pretty dumb for putting a key on github.
 const JWT_SECRET = "4742048d2fb8cf7777f62550766c1e747a1ea48df29cddc648e82f1ab2ce126e";
 
 // TEMP
