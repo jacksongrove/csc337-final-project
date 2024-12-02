@@ -26,21 +26,21 @@ const GameModelDB = mongoose.model("Game", GameSchema);
 
 // mongoose.connect(URL);
 
-let my_account = new Account({
-    name: "test",
-    username: "test",
-    passwordHash: "abc",
-    wins: 0,
-    losses: 0,
-});
+// let my_account = new Account({
+//     name: "test",
+//     username: "test",
+//     passwordHash: "abc",
+//     wins: 0,
+//     losses: 0,
+// });
 
-let my_game = new Game({
-    PlayerX: "test",
-    PlayerO: "test1",
-    Winner: "test",
-    Time: "9/2",
-    Moves: "zxcvbnmas",
-});
+// let my_game = new Game({
+//     PlayerX: "test",
+//     PlayerO: "test1",
+//     Winner: "test",
+//     Time: "9/2",
+//     Moves: "zxcvbnmas",
+// });
 
 // await my_account.save();
 
