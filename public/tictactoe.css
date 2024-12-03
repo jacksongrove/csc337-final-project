@@ -9,8 +9,8 @@ body {
     margin-right: auto;
     margin-left: auto;
     border-collapse: collapse;
-    height: 50vw;
-    width: 50vw;
+    height: 70vh;
+    width: 70vh;
 }
 
 #gameBoard td {
