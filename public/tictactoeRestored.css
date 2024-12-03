@@ -26,3 +26,33 @@ body {
     margin-top: 20px;
     font-size: 1.5rem;
 }
+#player1Stats {
+    width:200px;
+    height: 100vh;
+    position:absolute;
+    top:0;
+    left:0;
+    background:#d9d9d9;
+}
+
+#player1Stats p:first-of-type {
+    color: #3232e9;
+    font-size: x-large;
+    font-weight:bold;
+}
+
+#player2Stats {
+    width:200px;
+    height: 100vh;
+    position:absolute;
+    top:0;
+    right:0;
+    background:#d9d9d9;
+    vertical-align: middle;
+}
+
+#player2Stats p:first-of-type {
+    color: #d81818;
+    font-size: x-large;
+    font-weight:bold;
+}
