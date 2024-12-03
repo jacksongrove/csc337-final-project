@@ -14,17 +14,6 @@ updateAvailableGames();
 //     }
 // }, 1000);
 
-// https://stackoverflow.com/questions/9142527/can-you-require-two-form-fields-to-match-with-html
-function checkMatchingPassword() {
-    var input = document.getElementById('passwordAgain');
-    if (input.value != document.getElementById('password').value) {
-        input.setCustomValidity('Password Must be Matching.');
-    } else {
-        // input is valid -- reset the error message
-        input.setCustomValidity('');
-    }
-}
-
 async function fetchGameState() {
     const response = await fetch('/game/state/' + selectedGame);
     const data = await response.json();

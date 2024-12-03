@@ -9,7 +9,6 @@ const URL = "mongodb://127.0.0.1/my_db_name";
 const AccountSchema = new mongoose.Schema({
     name: String,
     username: String,
-    passwordHash: String,
     wins: Number,
     losses: Number,
 });
