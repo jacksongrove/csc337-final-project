@@ -24,17 +24,14 @@
      </div>
     <div class="board" id="board"></div>
     <div id="status">Loading...</div>
-    <button onclick="resetGame()">Reset Game</button>
+    <button id="resetButton" onclick="resetGame()">Reset Game</button>
 
     <!-- placeholders -->
     <div></div>
     <select name="gameSelectDropdown" id="gameSelectDropdown"></select>
     <div></div>
-    <button onclick="location.href='signup.html'">go to signup</button>
-    <button onclick="location.href='login.html'">go to login</button>
-    <button onclick="location.href='index.html'">go to game</button>
-    <button onclick="location.href='lobby.html'">go to lobby</button>
-    <button onclick="location.href='leaderboard.html'">go to leaderboard</button>
+    <button id="lobbyButton" onclick="location.href='lobby.html'">Back to Lobby</button>
+    <button id="leaderboardButton" onclick="location.href='leaderboard.html'">View Leaderboard</button>
 
     <script src="client.js"></script>
 </body>

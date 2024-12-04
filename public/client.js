@@ -36,8 +36,11 @@ function updateUI({ gameState, currentPlayer, gameActive }) {
     gameState.forEach((cell, index) => {
         const div = document.createElement('div');
         div.classList.add('cell');
-        if (cell) div.classList.add('taken');
-        div.textContent = cell || '';
+        if (cell) {
+            div.style.color = cell === 'X' ? 'red' : 'blue';
+            div.classList.add('taken');
+            div.textContent = cell || '';
+        }
         div.addEventListener('click', () => makeMove(index));
         board.appendChild(div);
     });
