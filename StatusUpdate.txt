@@ -10,4 +10,4 @@ The game screen has been created, providing a clear display for the players that
 
 Style documents for each page have been created, organizing the buttons and board in a more pleasing manner. Javascript for playing against a bot still needs to be written, but will be added as an option for a player to play against in the lobby.
 
-For the sake of time and quality of the finished product we have also chosen to keep important features and remove some extra "bells and whistles" – profile pictures for users and the ability to play against a bot. This will allow us to focus on more crucial parts of the project instead of stretching our time on unnecessary features.
+For the sake of time and quality of the finished product we have also chosen to keep important features and remove some extra "bells and whistles" – profile pictures for users, passwords for account creation and the ability to play the game against a bot. This will allow us to focus on more crucial parts of the project instead of stretching our time on unnecessary features.
