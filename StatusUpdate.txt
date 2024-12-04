@@ -7,3 +7,5 @@ Created a DBInterface class with a constructor that initializes the database and
 An AWS EC2 instance has been deployed and tested with an example project. Need to deploy the exisiting state of the game to test that it is work as the projects stands. The server and database will run as systemd services in the final deployment. 
 
 The game screen has been created, providing a clear display for the players that distinguishes which is Xs, which is Os, and whose turn it is at any given moment. All tic-tac-toe game logic is handled, also displaying when X or O wins and the game is over. The screen allows players to reset the board, navigate to other screens (Lobby or Leaderboard). There is still a bug where any client can place both X and O, not preventing them from playing out of turn which we plan to fix.
+
+Style documents for each page have been created, organizing the buttons and board in a more pleasing manner. Javascript for playing against a bot still needs to be written, but will be added as an option for a player to play against in the lobby.
