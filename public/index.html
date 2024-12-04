@@ -10,16 +10,18 @@
     <h1>Tic-Tac-Toe</h1>
     <div id="playerStatsSidebar">
         <div id="player1Stats">
-            <p>Player 1</p>
+            <p>Player X</p>
             <p id="player1Wins">Wins: </p>
             <p id="player1Losses">Losses: </p>
             <p id="player1WLRatio">W/L Ratio: </p>
+            <img id="redX" src="img/redX.png">
         </div>
         <div id="player2Stats">
-            <p>Player 2</p>
+            <p>Player O</p>
             <p id="player2Wins">Wins: </p>
             <p id="player2Losses">Losses: </p>
             <p id="player2WLRatio">W/L Ratio: </p>
+            <img id="blueO" src="img/blueO.png">
         </div>
      </div>
     <div class="board" id="board"></div>
@@ -27,11 +29,11 @@
     <button id="resetButton" onclick="resetGame()">Reset Game</button>
 
     <!-- placeholders -->
-    <div></div>
-    <select name="gameSelectDropdown" id="gameSelectDropdown"></select>
-    <div></div>
-    <button id="lobbyButton" onclick="location.href='lobby.html'">Back to Lobby</button>
-    <button id="leaderboardButton" onclick="location.href='leaderboard.html'">View Leaderboard</button>
+    <div id="buttonBanner">
+        <button id="lobbyButton" onclick="location.href='lobby.html'">Back to Lobby</button>
+        <button id="leaderboardButton" onclick="location.href='leaderboard.html'">View Leaderboard</button>
+        <select name="gameSelectDropdown" id="gameSelectDropdown"></select>
+    </div>
 
     <script src="client.js"></script>
 </body>

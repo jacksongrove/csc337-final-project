@@ -30,7 +30,7 @@ body {
 #player1Stats {
     padding-top: 33.5vh;
     width:200px;
-    height: 100vh;
+    height: 66.5vh;
     position:absolute;
     top:0;
     left:0;
@@ -38,7 +38,7 @@ body {
 }
 
 #player1Stats p:first-of-type {
-    color: #3232e9;
+    color: #d81818;
     font-size: x-large;
     font-weight:bold;
 }
@@ -46,7 +46,7 @@ body {
 #player2Stats {
     padding-top: 33.5vh;
     width:200px;
-    height: 100vh;
+    height: 66.5vh;
     position:absolute;
     top:0;
     right:0;
@@ -55,7 +55,7 @@ body {
 }
 
 #player2Stats p:first-of-type {
-    color: #d81818;
+    color: #3232e9;
     font-size: x-large;
     font-weight:bold;
 }
@@ -87,8 +87,18 @@ body {
     border-top: none;
 }
 
+#redX {
+    width: 100px;
+    height: auto;
+}
+
+#blueO {
+    width: 100px;
+    height: auto;
+}
+
 #resetButton {
-    margin-top: 20px;
+    margin: 20px;
     display: inline-block;
     padding: 10px 20px;
     font-size: 16px;
@@ -117,4 +127,21 @@ button {
 }
 button:hover {
     background-color: #bbb;
+}
+#gameSelectDropdown {
+    margin-top: 15px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #cccccc;
+    color: #333333;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+    display: inline-block;
+}
+#buttonBanner {
+    width: 100vw;
+    background-color: #e7e7e7;
+    padding-bottom: 5.55vh;
 }
