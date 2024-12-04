@@ -2,6 +2,6 @@
 
 <server>
 
-<database>
+Created a DBInterface class with a constructor that initializes the database and provides a method for adding a new user. This is still in progress and when completed will then move to allowing the games state to be stored and queried from the database. 
 
-<deployment>
+An AWS EC2 instance has been deployed and tested with an example project. Need to deploy the exisiting state of the game to test that it is work as the projects stands. The server and database will run as systemd services in the final deployment. 
