@@ -8,6 +8,6 @@ An AWS EC2 instance has been deployed and tested with an example project. Need t
 
 The game screen has been created, providing a clear display for the players that distinguishes which is Xs, which is Os, and whose turn it is at any given moment. All tic-tac-toe game logic is handled, also displaying when X or O wins and the game is over. The screen allows players to reset the board, navigate to other screens (Lobby or Leaderboard). There is still a bug where any client can place both X and O, not preventing them from playing out of turn which we plan to fix.
 
-Style documents for each page have been created, organizing the buttons and board in a more pleasing manner. Javascript for playing against a bot still needs to be written, but will be added as an option for a player to play against in the lobby.
+Style documents for each page have been created, organizing the buttons and board in a more pleasing manner. Images and further stylization of each page will be added to make the gameplay more enjoyable. Originally a bot would have been added to play against, but due to unneeded complexity it will no longer be added. 
 
 For the sake of time and quality of the finished product we have also chosen to keep important features and remove some extra "bells and whistles" – profile pictures for users, passwords for account creation and the ability to play the game against a bot. This will allow us to focus on more crucial parts of the project instead of stretching our time on unnecessary features.
