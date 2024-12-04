@@ -4,12 +4,12 @@
 const mongoose = require('mongoose');
 
 // Connect to some server somewhere with the DB
-const URL = "mongodb://127.0.0.1/my_db_name";
+// "sudo service mongod start" if the server has MongoDB
+const URL = "mongodb://127.0.0.1:27017/my_db_name";
 
 const AccountSchema = new mongoose.Schema({
     name: String,
     username: String,
-    passwordHash: String,
     wins: Number,
     losses: Number,
 });
@@ -46,34 +46,45 @@ const GameModelDB = mongoose.model("Game", GameSchema);
 
 // TEMPLATE FUNCTION
 // Function to connect to the database
-const connectToDb = async () => {
-    throw new Error("Not implemented");
+connectToDb = async () => {
+    await mongoose.connect(URL);
+    console.log("Connected to db!");
+    const my_account = new AccountModelDB({
+        name: "nameHere",
+        username: "usernameHere",
+        wins: 420,
+        losses: 69
+    });
+    await my_account.save();
+    let many = await AccountModelDB.find ({wins:420});
+    console.log(many);
+    // throw new Error("Not implemented");
 };
 
 // TEMPLATE FUNCTION
 // Converts Mongoose Game document to a plain JavaScript object (GameState object)
-const gameToGameState = (gameDocument) => {
+gameToGameState = (gameDocument) => {
     throw new Error("Not implemented");
     // returns GameState object
 };
 
 // TEMPLATE FUNCTION
 // Converts a GameState object back into a Mongoose Game document
-const gameStateToGameDocument = (gameState) => {
+gameStateToGameDocument = (gameState) => {
     throw new Error("Not implemented");
     // returns an object that can be stored in the database
 };
 
 // TEMPLATE FUNCTION
 // Converts Mongoose Account document to a plain JavaScript object (Account)
-const accountToAccountObject = (accountDocument) => {
+accountToAccountObject = (accountDocument) => {
     throw new Error("Not implemented");
     // return an account object (assuming we have one to begin with)
 };
 
 // TEMPLATE FUNCTION
 // Converts an Account object back into a Mongoose Account document
-const accountObjectToAccountDocument = (accountObject) => {
+accountObjectToAccountDocument = (accountObject) => {
     throw new Error("Not implemented");
     // returns an object that can be stored in the database
 };

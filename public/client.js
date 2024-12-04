@@ -1,9 +1,3 @@
-
-const board = document.getElementById('board');
-const status = document.getElementById('status');
-selectedGame = "Game1"
-updateAvailableGames();
-
 // Periodically poll server
 // TODO this is only temporary. It's better to have the server somehow
 // send an event to the client instead of periodically asking.
@@ -13,17 +7,6 @@ updateAvailableGames();
 //         onGameStateUpdate();
 //     }
 // }, 1000);
-
-// https://stackoverflow.com/questions/9142527/can-you-require-two-form-fields-to-match-with-html
-function checkMatchingPassword() {
-    var input = document.getElementById('passwordAgain');
-    if (input.value != document.getElementById('password').value) {
-        input.setCustomValidity('Password Must be Matching.');
-    } else {
-        // input is valid -- reset the error message
-        input.setCustomValidity('');
-    }
-}
 
 async function fetchGameState() {
     const response = await fetch('/game/state/' + selectedGame);
@@ -113,6 +96,11 @@ function handleGameSelection() {
     }
 }
 
+const board = document.getElementById('board');
+const status = document.getElementById('status');
+selectedGame = "Game1"
+updateAvailableGames();
+
 if (board != null && status != null){
     fetchGameState();
 }
@@ -120,6 +108,11 @@ if (board != null && status != null){
 // Just slap this on for now
 // TODO integrate this properly
 const eventSource = new EventSource('/game/events');
+
+// make sure we close the event source when we leave the page
+window.onbeforeunload = function () {
+    eventSource.close();
+};
 
 eventSource.onmessage = (event) => {
     console.log('Update received:', event.data);
