@@ -1,6 +1,6 @@
-const exp = require("constants");
+// const exp = require("constants");
 const express = require("express");
-const fs = require('fs');
+// const fs = require('fs');
 const app  = express();
 const port = process.env.PORT || 3000;
 const host = "localhost";
@@ -14,8 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 const gameRoutes = require('./routes/game');
 const db = require('./db');
 
+
 // Use routes
 app.use('/game', gameRoutes);
 
 app.listen(port,host, () =>
     console.log(`Example app listening at http://${host}:${port}`))
+
+db.connectToDb();
