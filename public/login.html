@@ -7,30 +7,19 @@
     <link id="cssFile" rel="stylesheet" type="text/css" href="tictactoe.css">
 </head>
 <body>
-    <img src="img/leaderboard.png" id="leaderboard">
-    <img src="img/pillar.png" id="pillar1">
-    <img src="img/pillar.png" id="pillar2">
-    
-    <!-- Table of players, replace with buttons -->
-    <table id="lb">
-        <tr>
-            <th scope="col">Player Name</th>
-            <th scope="col"> Win:loss</th>
-        </tr>
-        <tr>
-            <th scope="row">Player 1</th>
-            <td>3.0</td>
-        </tr>
-        <tr>
-            <th scope="row">Player 2</th>
-            <td>1.0</td>
-        </tr>
-        <tr>
-            <th scope="row">Player 3</th>
-            <td>0.5</td>
-        </tr>
-    </table>
-    <button onclick="location.href='lobby.html'">Lobby</button>
+    <!-- Title -->
+    <h1>Log in</h1>
+    <form action="/auth/login" method="POST">
+        <!-- Username input -->
+        <div>
+            <span>username:</span>
+            <span>
+                <input required type="text" name="username">
+            </span>
+        </div>
+        <input type="submit" value="Submit (Log in)"></button>
+    </form>
+    <button onclick="location.href='signup.html'">sign up instead</button>
 
     <!-- placeholders -->
     <div></div>

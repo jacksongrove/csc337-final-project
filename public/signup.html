@@ -7,30 +7,27 @@
     <link id="cssFile" rel="stylesheet" type="text/css" href="tictactoe.css">
 </head>
 <body>
-    <img src="img/leaderboard.png" id="leaderboard">
-    <img src="img/pillar.png" id="pillar1">
-    <img src="img/pillar.png" id="pillar2">
-    
-    <!-- Table of players, replace with buttons -->
-    <table id="lb">
-        <tr>
-            <th scope="col">Player Name</th>
-            <th scope="col"> Win:loss</th>
-        </tr>
-        <tr>
-            <th scope="row">Player 1</th>
-            <td>3.0</td>
-        </tr>
-        <tr>
-            <th scope="row">Player 2</th>
-            <td>1.0</td>
-        </tr>
-        <tr>
-            <th scope="row">Player 3</th>
-            <td>0.5</td>
-        </tr>
-    </table>
-    <button onclick="location.href='lobby.html'">Lobby</button>
+    <!-- Title -->
+    <h1>Sign in</h1>
+    <form action="/auth/signup" method="POST">
+        <!-- Name input -->
+        <div>
+            <span>name:</span>
+            <span>
+                <input id="name" required name="name" type="text">
+            </span>
+        </div>
+        <!-- Username input -->
+        <div>
+            <span>username:</span>
+            <span>
+                <input id="username" required name="username" type="text">
+            </span>
+        </div>
+        <input type="submit"></button>
+    </form>
+    <button onclick="location.href='login.html'">Log in instead</button>
+    <!-- Handle accept and reject scenario -->
 
     <!-- placeholders -->
     <div></div>
@@ -39,7 +36,7 @@
     <button onclick="location.href='index.html'">go to game</button>
     <button onclick="location.href='lobby.html'">go to lobby</button>
     <button onclick="location.href='leaderboard.html'">go to leaderboard</button>
-
+    
     <script src="client.js"></script>
 </body>
 </html>
