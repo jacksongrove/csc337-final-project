@@ -31,7 +31,7 @@ body {
     padding-top: 33.5vh;
     width:200px;
     height: 66.5vh;
-    position:absolute;
+    position: absolute;
     top:0;
     left:0;
     background:#d9d9d9;
@@ -40,14 +40,14 @@ body {
 #player1Stats p:first-of-type {
     color: #d81818;
     font-size: x-large;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 #player2Stats {
     padding-top: 33.5vh;
     width:200px;
     height: 66.5vh;
-    position:absolute;
+    position: absolute;
     top:0;
     right:0;
     background:#d9d9d9;
@@ -57,7 +57,7 @@ body {
 #player2Stats p:first-of-type {
     color: #3232e9;
     font-size: x-large;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 .cell:nth-child(1),
@@ -159,4 +159,26 @@ button:hover {
     width: 100vw;
     background-color: #e7e7e7;
     padding-bottom: 5.55vh;
+}
+
+#lb {
+    text-align: center;
+    margin-left: 42vw;
+}
+
+#pillar1 {
+    width: 200px;
+    height: auto;
+    float: left;
+}
+
+#pillar2 {
+    width: 200px;
+    height: auto;
+    float: right;
+}
+
+#leaderboard {
+    width: 100vw;
+    height: auto;
 }
