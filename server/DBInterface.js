@@ -19,6 +19,7 @@ class DBInterface {
         });
 
         const GameSchema = new mongoose.Schema({
+            Id: Number,
             PlayerX: String,
             PlayerO: String,
             Winner: String,
@@ -43,6 +44,12 @@ class DBInterface {
     async get_user(uname) {
         let out = await this.#User.find({username: uname});
         console.log(out);
+    }
+
+    async send_gameState(gameState) {
+        const nGS = this.#GameState(gameState)
+
+        await nGS.save();
     }
 }
 
