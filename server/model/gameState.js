@@ -39,12 +39,17 @@ class GameState {
             if (this.currentPlayer == 'X' && this.PlayerX != asPlayer) {
                 // error if the move X was not made by player X
                 return { error: `${asPlayer} tried to move for ${this.PlayerX} who is player X!` };
-            } else if (this.currentPlayer == 'O' && this.PlayerO != asPlayer) {
+            }
+            if (this.currentPlayer == 'O' && this.PlayerO != asPlayer) {
                 // error if the move O was not made by player O
                 return { error: `${asPlayer} tried to move for ${this.playerO} who is (player O)!` };
-            } else {
+            }
+            if (this.currentPlayer != 'O' && this.currentPlayer != 'X') {
                 // something has gone wrong, somehow neither an X or O value is set
-                return { error: 'GameState current player is neither X nor O!' };
+                // it's so wrong that we should return an error
+                console.error("GameState current player is neither X nor O!", error);
+                throw error;
+                // return { error: 'GameState current player is neither X nor O!' };
             }
         }
         if (this.gameState[index]) {
