@@ -3,17 +3,26 @@
 // should focus on serving requests. This class only simulates the game and contains
 // the state data of the game (but not the users themselves).
 class GameState {
-    constructor(PlayerX, playerO) {
+    constructor(PlayerX, playerO, board = null, currentPlayer = null, gameActive = null, moves = null) {
         this.reset();
         // keep track of the players active in this game.
         // this can be used to prevent the wrong player from making a move.
         // This also lets us have an easier time storing statistics about players.
         this.PlayerX = PlayerX;
         this.playerO = playerO;
+
+        if (board != null)
+            this.board = board;
+        if (currentPlayer != null)
+            this.currentPlayer = currentPlayer;
+        if (gameActive != null)
+            this.gameActive = gameActive;
+        if (moves != null)
+            this.moves = moves;
     }
     // Reset the game state
     reset() {
-        this.gameState = Array(9).fill(null); // Example: 9 cells for a Tic-Tac-Toe game
+        this.board = Array(9).fill(null); // Example: 9 cells for a Tic-Tac-Toe game
         // X must always go first
         this.currentPlayer = 'X'; // current player (either X or O)
         this.gameActive = true; // game no longer active when it's a win/loss/draw
@@ -23,7 +32,7 @@ class GameState {
     // Get the current state
     getState() {
         return {
-            gameState: this.gameState,
+            gameState: this.board,
             currentPlayer: this.currentPlayer,
             gameActive: this.gameActive,
         };
@@ -52,11 +61,11 @@ class GameState {
                 // return { error: 'GameState current player is neither X nor O!' };
             }
         }
-        if (this.gameState[index]) {
+        if (this.board[index]) {
             return { error: 'Cell already taken.' };
         }
 
-        this.gameState[index] = this.currentPlayer;
+        this.board[index] = this.currentPlayer;
         this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
         this.moves.push(index);
         return { success: true };
@@ -70,11 +79,18 @@ class GameState {
         ];
         for (const pattern of winPatterns) {
             const [a, b, c] = pattern;
-            if (this.gameState[a] && this.gameState[a] === this.gameState[b] && this.gameState[a] === this.gameState[c]) {
-                return this.gameState[a];
+            if (this.board[a] && this.board[a] === this.board[b] && this.board[a] === this.board[c]) {
+                return this.board[a];
             }
         }
-        return this.gameState.includes(null) ? null : 'Draw';
+        return this.board.includes(null) ? null : 'Draw';
+    }
+
+    getWinner() {
+        if (this.gameActive == false)
+            return this.currentPlayer;
+        else
+            return null;
     }
 }
 

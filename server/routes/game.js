@@ -35,11 +35,11 @@ router.get('/state/*', (req, res) => {
         gameKey = req.url.split("/").pop()
         let game = runningGames.get(gameKey);
         res.json({
-            gameState: game.gameState,
+            gameState: game.board,
             currentPlayer: game.currentPlayer,
             gameActive: game.gameActive});
         console.log(`${req.url} resolved`);
-        console.log(game.gameState, game.currentPlayer, game.gameActive);
+        console.log(game.board, game.currentPlayer, game.gameActive);
     } catch (error) {
         console.log(error)
         // do not respond
@@ -68,12 +68,12 @@ router.post('/move/*', (req, res) => {
         return
     }
 
-    if (!game.gameActive || game.gameState[index]) {
+    if (!game.gameActive || game.board[index]) {
         console.log(`invalid move by ${game.currentPlayer}`);
         return res.status(400).json({ error: 'Invalid move' });
     }
 
-    game.gameState[index] = game.currentPlayer;
+    game.board[index] = game.currentPlayer;
     const winner = game.checkWinner(game);
 
     if (winner) {
@@ -81,12 +81,12 @@ router.post('/move/*', (req, res) => {
         console.log(`Game "${gameKey}" ended`);
         return res.json({ 
             message: winner === 'Draw' ? 'It\'s a draw!' : `Player ${winner} wins!`, 
-            gameState: game.gameState });
+            gameState: game.board });
     }
 
     game.currentPlayer = game.currentPlayer === 'X' ? 'O' : 'X';
     res.json({
-        gameState: game.gameState,
+        gameState: game.board,
         currentPlayer: game.currentPlayer,
         gameActive: game.gameActive});
     notifyAllClients();
@@ -110,10 +110,10 @@ router.post('/reset/*', (req, res) => {
         return
     }
     
-    game.gameState = Array(9).fill(null);
+    game.board = Array(9).fill(null);
     game.currentPlayer = 'X';
     game.gameActive = true;
-    let gameState = game.gameState
+    let gameState = game.board
     res.json({ message: 'Game reset', gameState });
     notifyAllClients();
 });
