@@ -9,8 +9,10 @@ class GameState {
     // Reset the game state
     reset() {
         this.gameState = Array(9).fill(null); // Example: 9 cells for a Tic-Tac-Toe game
+        // X must always go first
         this.currentPlayer = 'X'; // current player (either X or O)
         this.gameActive = true; // game no longer active when it's a win/loss/draw
+        this.moves = []
     }
 
     // Get the current state
@@ -33,6 +35,7 @@ class GameState {
 
         this.gameState[index] = this.currentPlayer;
         this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+        this.moves.push(index);
         return { success: true };
     }
 
