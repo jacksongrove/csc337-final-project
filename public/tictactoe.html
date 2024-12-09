@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link id="cssFile" rel="stylesheet" type="text/css" href="tictactoe.css">
+</head>
+<body>
+    <img id="title" src="img/title.png">
+    <div id="playerStatsSidebar">
+        <div id="player1Stats">
+            <p>Player X</p>
+            <p id="player1Wins">Wins: 0</p>
+            <p id="player1Losses">Losses: 0</p>
+            <p id="player1WLRatio">W/L Ratio: N/A</p>
+            <img id="redX" src="img/redX.png">
+        </div>
+        <div id="player2Stats">
+            <p>Player O</p>
+            <p id="player2Wins">Wins: 0</p>
+            <p id="player2Losses">Losses: 0</p>
+            <p id="player2WLRatio">W/L Ratio: N/A</p>
+            <img id="blueO" src="img/blueO.png">
+        </div>
+     </div>
+    <div class="board" id="board"></div>
+    <div id="status">Loading...</div>
+    <button id="resetButton" onclick="resetGame()">Reset Game</button>
+
+    <!-- placeholders -->
+    <div id="buttonBanner">
+        <button id="lobbyButton" onclick="location.href='lobby.html'">Quit</button>
+        <button id="leaderboardButton" onclick="location.href='leaderboard.html'">View Leaderboard</button>
+    </div>
+
+    <script src="client.js"></script>
+</body>
+</html>

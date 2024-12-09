@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link id="cssFile" rel="stylesheet" type="text/css" href="tictactoe.css">
+</head>
+<body>
+    <!-- Title -->
+    <h1>Log in</h1>
+    <form action="/auth/login" method="POST">
+        <!-- Username input -->
+        <div>
+            <span>username:</span>
+            <span>
+                <input required type="text" name="username">
+            </span>
+        </div>
+        <input type="submit" value="Submit (Log in)"></button>
+    </form>
+    <button onclick="location.href='signup.html'">sign up instead</button>
+
+    <!-- placeholders -->
+    <div></div>
+    <button onclick="location.href='signup.html'">go to signup</button>
+    <button onclick="location.href='login.html'">go to login</button>
+    <button onclick="location.href='tictactoe.html'">go to game</button>
+    <button onclick="location.href='lobby.html'">go to lobby</button>
+    <button onclick="location.href='leaderboard.html'">go to leaderboard</button>
+
+    <script src="client.js"></script>
+</body>
+</html>
