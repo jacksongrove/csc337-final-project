@@ -4,9 +4,6 @@ const db = require('../db/db');
 const account = require('../model/account');
 const router = express.Router();
 
-// TEMP
-let users = new Set();
-
 // POST /signup
 router.post('/signup', async (req, res) => {
     const { name, username} = req.body;
@@ -17,12 +14,12 @@ router.post('/signup', async (req, res) => {
     }
 
     // Check if user already exists
-    if (users.has(username)) {
+    // try loading account
+    let loadedAccountResult = await db.loadAccount(username);
+    if (loadedAccountResult != null) {
         return res.status(409).json({ message: 'User already exists.' });
     }
 
-    // Add the user DEBUG
-    users.add(username);
     // Add the user to the database
     let newUser = new account.Account(name, username, 0, 0);
     // TODO temp await, can be potentially skipped
