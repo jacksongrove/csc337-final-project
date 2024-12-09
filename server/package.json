@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "server.js",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.1",
     "mongoose": "^8.8.3"
   }

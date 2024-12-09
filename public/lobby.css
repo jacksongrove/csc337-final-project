@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#players {
+    margin: 20px;
+}
+.player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+#notification {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f4f4f4;
+    border-top: 1px solid #ccc;
+    padding: 15px;
+    display: none;
+}
+#notification p {
+    margin: 0 0 10px 0;
+}
+#notification button {
+    margin-right: 10px;
+}

@@ -8,6 +8,9 @@
 //     }
 // }, 1000);
 
+// const { getCookies } = require("undici-types");
+// import { getCookies } from './undici-types';
+
 async function fetchGameState() {
     const response = await fetch('/game/state/' + selectedGame);
     const data = await response.json();
@@ -96,6 +99,76 @@ function handleGameSelection() {
     }
 }
 
+// Simulate challengePlayer function
+function challengePlayer(username) {
+    console.log(`Challenged ${username}`);
+    // Make a POST request to send a challenge
+    fetch('/lobby/challenge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ challengedUsername: username })
+    }).then(response => response.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err));
+}
+
+// Simulate receiving a challenge
+function showNotification(challenger) {
+    const notification = document.getElementById('notification');
+    const challengeMessage = document.getElementById('challengeMessage');
+    const acceptBtn = document.getElementById('acceptBtn');
+    const declineBtn = document.getElementById('declineBtn');
+
+    challengeMessage.textContent = `${challenger} has challenged you!`;
+    notification.style.display = 'block';
+
+    acceptBtn.onclick = () => {
+        console.log('Challenge accepted!');
+        notification.style.display = 'none';
+        // TODO begin game by asking the server for a game id to join
+        // once we have the game id we can enter the game
+        // the server will handle telling the other player to connect to the
+        // same gameid
+    };
+
+    declineBtn.onclick = () => {
+        console.log('Challenge declined!');
+        notification.style.display = 'none';
+        // TODO tell the server the game is cancelled, do nothing further.
+        // the server will handle telling the other player that it was declined.
+    };
+}
+
+function loadLobbyExample(){
+    // Example list of players
+    const players = [
+        { name: 'Alice', username: 'alice123' },
+        { name: 'Bob', username: 'bob456' },
+    ];
+
+    // Reference to the players div
+    const playersDiv = document.getElementById('players');
+
+    // Load players dynamically
+    players.forEach(player => {
+        const playerDiv = document.createElement('div');
+        playerDiv.className = 'player';
+        playerDiv.innerHTML = `
+            <div>
+                <strong>${player.name}</strong><br>
+                <small>${player.username}</small>
+            </div>
+            <button onclick="challengePlayer('${player.username}')">Challenge</button>
+        `;
+        playersDiv.appendChild(playerDiv);
+    });
+
+    // Simulate a challenge from another player after 2 seconds
+    // setTimeout(() => showNotification('Charlie'), 2000);
+}
+
+
+
 const board = document.getElementById('board');
 const status = document.getElementById('status');
 selectedGame = "Game1"
@@ -107,7 +180,7 @@ if (board != null && status != null){
 
 // Just slap this on for now
 // TODO integrate this properly
-const eventSource = new EventSource('/game/events');
+const eventSource = new EventSource('/event/events');
 
 // make sure we close the event source when we leave the page
 window.onbeforeunload = function () {
@@ -116,7 +189,21 @@ window.onbeforeunload = function () {
 
 eventSource.onmessage = (event) => {
     console.log('Update received:', event.data);
-    fetchGameState(); // Update the UI
+    let data = JSON.parse(event.data);
+    // check the event type
+    switch (data.type) {
+        case "challenge":
+            // Give notification that user was challenged
+            showNotification(data.message);
+            break;
+        case "gameState":
+            // Update the GameState UI
+            fetchGameState();
+            break;
+        default:
+            break;
+    }
+    
 };
 
 eventSource.onerror = (error) => {

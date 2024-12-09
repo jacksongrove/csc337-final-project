@@ -5,29 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link id="cssFile" rel="stylesheet" type="text/css" href="tictactoe.css">
+    <link id="cssFile" rel="stylesheet" type="text/css" href="lobby.css">
 </head>
-<body>
-    <h1>Lobby</h1>
-    
-    <!-- Table of players, replace with buttons -->
-    <table>
-        <tr>
-            <th scope="col">Player Name</th>
-            <th scope="col"></th>
-        </tr>
-        <tr>
-            <th scope="row">Player 1</th>
-            <td> <a href="">Challenge</a> </td>
-        </tr>
-        <tr>
-            <th scope="row">Player 2</th>
-            <td> <a href="">Challenge</a> </td>
-        </tr>
-        <tr>
-            <th scope="row">Player 3</th>
-            <td> <a href="">Challenge</a> </td>
-        </tr>
-    </table>
+<body onload="javascript:loadLobbyExample()">
+    <h1>Online Players</h1>
+    <div id="players">
+        <!-- Player list will be loaded dynamically -->
+    </div>
+
+    <div id="notification">
+        <p id="challengeMessage"></p>
+        <button id="acceptBtn">Accept</button>
+        <button id="declineBtn">Decline</button>
+    </div>
     <button onclick="location.href='leaderboard.html'">Leaderboard</button>
 
     <!-- placeholders -->

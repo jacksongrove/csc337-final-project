@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const GameState = require('../model/gameState');
+const clients = require('../model/clients');
 
 // Map Key:     <gameId: String>
 // Map Value:   <game: GameState>
 let runningGames = new Map();
-
-// Store active SSE connections (important for updating other user's gamestate
-// when a different player takes an action). In the future this should be able
-// to differentiate which player requires an event (not all players need to know
-// that Xx_player_xX made their move since they are not in that game).
-const clients = [];
 
 // temp (call function below)
 generateHardcodedLobbies();
@@ -89,7 +84,7 @@ router.post('/move/*', (req, res) => {
         gameState: game.board,
         currentPlayer: game.currentPlayer,
         gameActive: game.gameActive});
-    notifyAllClients();
+        clients.notifyAllClients();
 });
 
 // Route for handling reset requests. This is made by a user when they want to
@@ -115,7 +110,7 @@ router.post('/reset/*', (req, res) => {
     game.gameActive = true;
     let gameState = game.board
     res.json({ message: 'Game reset', gameState });
-    notifyAllClients();
+    clients.notifyAllClients();
 });
 
 // Route for getting the current game ids available. They are also keys. This
@@ -127,41 +122,5 @@ router.get('/runningGamesKeys', (req, res) => {
     console.log(runningGamesKeys);
     res.json({runningGamesKeys});
 });
-
-// SSE endpoint. Still learning what this does. Seems to be a special type of
-// connection that allows keeping a connection alive and sending data through.
-// Probably not HTTP/1.0. Maybe an HTTP/1.1 feature.
-router.get('/events', (req, res) => {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-
-    // Keep track of this client connection
-    clients.push(res);
-
-    // Handle disconnection
-    req.on('close', () => {
-        clients.splice(clients.indexOf(res), 1);
-    });
-});
-
-// Really dumb implementation. Basically just notify all clients that a change
-// occurred to fetch any necessary changes. Only some players should realistically
-// be notified (literally one other player because this is tic-tac-toe)
-function notifyAllClients() {
-    sendEvent({
-        type: 'gameEvent',
-        message: 'An event occurred, request new status please.',
-    });
-}
-
-// Function to send an event to all clients. This just spews data. The client
-// currently only uses this event as a signal that there might be a new gamestate
-// available.
-function sendEvent(event) {
-    clients.forEach((client) => {
-        client.write(`data: ${JSON.stringify(event)}\n\n`);
-    });
-}
 
 module.exports = router;
