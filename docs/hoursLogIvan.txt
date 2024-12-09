@@ -33,4 +33,8 @@ TODO:
     Tell the user who is signed in at all times (at the top right or something) (we don't want to look at cookies to determine which account we are in)
     If the game is still going then in the lobby there should also be a button to rejoin the game (or anywhere)
     Make it so that the server ends the game if a player leaves the game intentionally or starts another game (losing connection is ok)
+    Make the configs for the server be on a file. So that the ip and port can be chosen in a config, as well as any other security details.
+    Challenging self is kinda buggy (requires a reload for some reason).
+    Have the challenge popup happen anywhere (maybe they are in a game, looking at the leaderboard, or in a different page but still online)
+    Following from the previous TODO, make the notification appear in situations where the user is loading into a different page
 
