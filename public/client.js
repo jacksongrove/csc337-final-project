@@ -21,6 +21,12 @@ async function updateOnlineUsers() {
 }
 
 function updateUI({ gameState, currentPlayer, gameActive }) {
+    // if there is no board then we cannot draw
+    // if there is no gamestate we cannot draw
+    if (board == undefined || gameState == undefined) {
+        return;
+    }
+    
     board.innerHTML = '';
     gameState.forEach((cell, index) => {
         const div = document.createElement('div');
@@ -131,6 +137,11 @@ function loadLobby(players){
 
     // Reference to the players div
     const playersDiv = document.getElementById('players');
+
+    // if it doesn't exist then we can't draw to it
+    if (playersDiv == undefined) {
+        return;
+    }
 
     // clear of any previous data.
     playersDiv.innerHTML = '';
