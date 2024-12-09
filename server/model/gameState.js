@@ -3,8 +3,13 @@
 // should focus on serving requests. This class only simulates the game and contains
 // the state data of the game (but not the users themselves).
 class GameState {
-    constructor() {
+    constructor(PlayerX, playerO) {
         this.reset();
+        // keep track of the players active in this game.
+        // this can be used to prevent the wrong player from making a move.
+        // This also lets us have an easier time storing statistics about players.
+        this.PlayerX = PlayerX;
+        this.playerO = playerO;
     }
     // Reset the game state
     reset() {
@@ -12,7 +17,7 @@ class GameState {
         // X must always go first
         this.currentPlayer = 'X'; // current player (either X or O)
         this.gameActive = true; // game no longer active when it's a win/loss/draw
-        this.moves = []
+        this.moves = [];
     }
 
     // Get the current state
@@ -25,9 +30,22 @@ class GameState {
     }
 
     // Make a move
-    makeMove(index) {
+    makeMove(index, asPlayer) {
         if (!this.gameActive) {
             return { error: 'Game is over.' };
+        }
+        if (asPlayer != null) {
+            
+            if (this.currentPlayer == 'X' && this.PlayerX != asPlayer) {
+                // error if the move X was not made by player X
+                return { error: `${asPlayer} tried to move for ${this.PlayerX} who is player X!` };
+            } else if (this.currentPlayer == 'O' && this.PlayerO != asPlayer) {
+                // error if the move O was not made by player O
+                return { error: `${asPlayer} tried to move for ${this.playerO} who is (player O)!` };
+            } else {
+                // something has gone wrong, somehow neither an X or O value is set
+                return { error: 'GameState current player is neither X nor O!' };
+            }
         }
         if (this.gameState[index]) {
             return { error: 'Cell already taken.' };
