@@ -32,7 +32,8 @@ async function makeMove(index) {
         updateUI(data);
         if (data.message) alert(data.message);
     } else {
-        alert('Invalid move');
+        const data = await response.json();
+        alert(`Invalid move: ${data.message}`);
     }
 }
 
@@ -138,8 +139,6 @@ function loadLobbyExample(){
 
 const board = document.getElementById('board');
 const status = document.getElementById('status');
-// selectedGame = "Game1"
-updateAvailableGames();
 
 if (board != null && status != null){
     fetchGameState();
