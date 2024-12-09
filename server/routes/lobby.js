@@ -6,6 +6,17 @@ const clients = require('../model/clients');
 const Challenge = require('../model/challenge');
 const GameState = require('../model/gameState');
 
+router.get('/onlineUsers', async (req, res) => {
+    try {
+        const allOnlineUsers = await getAllOnlineUsers();
+        // return our list of online users.
+        res.status(200).json({allOnlineUsers});
+    } catch (error) {
+        console.error('Error handling onlineUsers request:', error);
+        res.status(500).json({ message: 'An error occurred.' });
+    }
+});
+
 router.post('/challenge', async (req, res) => {
     try {
         const { challengedUsername } = req.body;
@@ -207,5 +218,38 @@ function notifyChallengeAcceptEvent(challenger, challenged) {
         challenger
     );
 }
+
+function notifyLobbyUpdate(allOnlineUsers){
+    clients.sendEventAll(
+        { type: 'lobbyUpdate', allOnlineUsers }
+    );
+}
+
+async function getAllOnlineUsers(){
+    const allOnlineUsers = [];
+    const allOnlineClients = clients.getAllClients();
+    const userPromises = [];
+
+    allOnlineClients.forEach((client, username) => {
+        const accountPromise = db.loadAccount(username);
+        userPromises.push(accountPromise);
+    });
+    // Wait for all promises to resolve
+    const allOnlineAccounts = await Promise.all(userPromises);
+    // strip away all but the necessary data (exclude personal data)
+    allOnlineAccounts.forEach(account => {
+        allOnlineUsers.push({
+            name: account.name,
+            username: account.username,
+            wins: account.wins,
+            losses: account.losses,
+        });
+    });
+    return allOnlineUsers;
+}
+
+clients.setOnClientChange(() => {
+    getAllOnlineUsers().then(function(allOnlineUsers) {notifyLobbyUpdate(allOnlineUsers)});
+});
 
 module.exports = router;

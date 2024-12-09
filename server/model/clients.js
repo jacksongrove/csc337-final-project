@@ -5,6 +5,9 @@
 // that Xx_player_xX made their move since they are not in that game).
 const clientMap = new Map(); // Maps `username` to `response` (client connection)
 
+// on default has a function that does nothing.
+let clientChangeHandler = () => {};
+
 // Really dumb implementation. Basically just notify all clients that a change
 // occurred to fetch any necessary changes. Only some players should realistically
 // be notified (literally one other player because this is tic-tac-toe)
@@ -47,14 +50,29 @@ function sendEventToUserName(event, username) {
 // if authentication will use passwords then these should be replaced with tokens
 function setClient(username, client) {
     clientMap.set(username, client);
+    clientChangeHandler();
 }
 
 function removeClient(username) {
     clientMap.delete(username);
+    clientChangeHandler();
 }
 
 function getClient(username) {
     return clientMap.get(username);
+}
+
+function getAllClients() {
+    return clientMap;
+}
+
+// only one may exist for now
+function setOnClientChange(handler) {
+    clientChangeHandler = handler;
+}
+
+function removeOnClientChange() {
+    clientChangeHandler = () => {};
 }
 
 module.exports = {
@@ -65,4 +83,7 @@ module.exports = {
     setClient,
     removeClient,
     getClient,
+    getAllClients,
+    setOnClientChange,
+    removeOnClientChange
 };

@@ -5,6 +5,21 @@ async function fetchGameState() {
     updateUI(data);
 }
 
+async function updateOnlineUsers() {
+    const response = await fetch('/lobby/onlineUsers', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({ index })
+    });
+    if (response.ok) {
+        const data = await response.json();
+        loadLobby(data.allOnlineUsers);
+    } else {
+        const data = await response.json();
+        console.error(`Could not load online users: ${data.message}`);
+    }
+}
+
 function updateUI({ gameState, currentPlayer, gameActive }) {
     board.innerHTML = '';
     gameState.forEach((cell, index) => {
@@ -107,15 +122,18 @@ function closeNotification(){
     console.error("not implemented");
 }
 
-function loadLobbyExample(){
+function loadLobby(players){
     // Example list of players
-    const players = [
-        { name: 'Alice', username: 'alice123' },
-        { name: 'Bob', username: 'bob456' },
-    ];
+    // const players = [
+    //     { name: 'Alice', username: 'alice123' },
+    //     { name: 'Bob', username: 'bob456' },
+    // ];
 
     // Reference to the players div
     const playersDiv = document.getElementById('players');
+
+    // clear of any previous data.
+    playersDiv.innerHTML = '';
 
     // Load players dynamically
     players.forEach(player => {
@@ -173,6 +191,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update the GameState UI
                 fetchGameState();
                 break;
+            case "lobbyUpdate":
+                loadLobby(data.allOnlineUsers);
             default:
                 break;
         }
