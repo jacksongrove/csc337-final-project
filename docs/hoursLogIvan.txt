@@ -10,3 +10,27 @@
 11/29-12/7 - ? hours occasionally fixing bugs and communicating with team TODO calculate hours
 11/8 - ? hours sign in authentication
 11/8 - ? hours challenge players feature
+11/8 - ? hours proper lobby implementation
+TODO: 
+    Implement leaderboards properly
+    Show the name of the two players during the game
+    Remove some alerts maybe (kinda annoying)
+    Keep client connected during page transitions
+    Allow for accept/decline buttons next to the challenge button (maybe multiple people challenge)
+    Make firefox hold off on displaying until all resources are loaded first
+    Maybe add icon using /favicon.ico
+    Make login/signup not show you a 200 or 400 status (automatically redirect to lobby.html)
+    Document a lot of code
+    Refactor some code since there is a lot of duplication
+    Modularize the code so less mistakes can happen and so mistakes can be spotted
+    Add logout button
+    Add obvious login/signup buttons when not logged in
+    Make errors more obvious (instead of telling the console that you are not authorized, tell the user in a popup or notification, or gray out the option)
+    Make code more resilient (prevent user from easily crashing it). If something catastrophic happens it's better to just catch the error and undo or reset whatever was affected
+    Style with CSS
+    Investigate faulty behavior with events (the client sometimes doesn't synchronize with server correctly)
+    Maybe implement passwords? (that can be much much later if we still want to)
+    Tell the user who is signed in at all times (at the top right or something) (we don't want to look at cookies to determine which account we are in)
+    If the game is still going then in the lobby there should also be a button to rejoin the game (or anywhere)
+    Make it so that the server ends the game if a player leaves the game intentionally or starts another game (losing connection is ok)
+
