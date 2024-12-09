@@ -16,6 +16,10 @@ router.get('/events', (req, res) => {
         return res.status(401).json({ message: 'Must be logged in to subscribe to events.' });
     }
 
+    // TODO, if another connection is made then boot the original connection.
+    // Such as sending the client a message that another user logged into the
+    // same account.
+
     // Keep track of this client connection
     // clients.clientList.push(res);
     clients.setClient(usernameFromCookie, res);

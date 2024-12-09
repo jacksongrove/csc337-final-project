@@ -1,18 +1,6 @@
-// Periodically poll server
-// TODO this is only temporary. It's better to have the server somehow
-// send an event to the client instead of periodically asking.
-// setInterval(() => {
-//     // Only poll it the board and status exist
-//     if (board != null && status != null){
-//         onGameStateUpdate();
-//     }
-// }, 1000);
-
-// const { getCookies } = require("undici-types");
-// import { getCookies } from './undici-types';
 
 async function fetchGameState() {
-    const response = await fetch('/game/state/' + selectedGame);
+    const response = await fetch('/game/state');
     const data = await response.json();
     updateUI(data);
 }
@@ -34,7 +22,7 @@ function updateUI({ gameState, currentPlayer, gameActive }) {
 }
 
 async function makeMove(index) {
-    const response = await fetch('/game/move/' + selectedGame, {
+    const response = await fetch('/game/move', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ index })
@@ -45,57 +33,6 @@ async function makeMove(index) {
         if (data.message) alert(data.message);
     } else {
         alert('Invalid move');
-    }
-}
-
-async function resetGame() {
-    await fetch('/game/reset/' + selectedGame, { method: 'POST' });
-    fetchGameState();
-}
-
-// This only runs once, though it should run whenever there is a change. Or
-// maybe it gets scrapped entirely.
-async function getAvailableGames(){
-    const response = await fetch('/game/runningGamesKeys');
-    const data = await response.json();
-    return data
-}
-
-async function updateAvailableGames(){
-    dropdown = document.getElementById("gameSelectDropdown");
-    response = await getAvailableGames();
-    // Clear existing options in the dropdown
-    dropdown.innerHTML = '';
-
-    // Add a default "select game" option
-    const defaultOption = document.createElement('option');
-    defaultOption.text = "Select a game";
-    defaultOption.value = "";
-
-    dropdown.add(defaultOption);
-    for (let index = 0; index < response.runningGamesKeys.length; index++) {
-        const gameKey = response.runningGamesKeys[index];
-        const option = document.createElement('option');
-        option.text = gameKey; // Display the game key
-        option.value = gameKey; // Use the game key as the value
-        dropdown.add(option); // Add the option to the dropdown
-    }
-
-    // Add change event listener to the dropdown
-    dropdown.addEventListener('change', handleGameSelection);
-}
-
-function handleGameSelection() {
-    const dropdown = document.getElementById("gameSelectDropdown");
-    const selectedGameKey = dropdown.value;
-
-    if (selectedGameKey) {
-        console.log(`User selected game: ${selectedGameKey}`);
-        // Perform further actions, e.g., join the game or fetch game details
-        selectedGame = selectedGameKey
-        fetchGameState();
-    } else {
-        console.log("No game selected.");
     }
 }
 
@@ -112,8 +49,13 @@ function challengePlayer(username) {
       .catch(err => console.error(err));
 }
 
+// TODO
+function challengePlayerCancelled(challenger, challenged){
+    console.error("not implemented");
+}
+
 // Simulate receiving a challenge
-function showNotification(challenger) {
+function showNotification(challenger, challenged) {
     const notification = document.getElementById('notification');
     const challengeMessage = document.getElementById('challengeMessage');
     const acceptBtn = document.getElementById('acceptBtn');
@@ -129,6 +71,17 @@ function showNotification(challenger) {
         // once we have the game id we can enter the game
         // the server will handle telling the other player to connect to the
         // same gameid
+
+        console.log(`Challenge accepted between ${challenger} and ${challenged}`);
+        // Make a POST request to send a challenge
+        fetch('/lobby/challengeAccept', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
+        }).then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+
     };
 
     declineBtn.onclick = () => {
@@ -136,7 +89,21 @@ function showNotification(challenger) {
         notification.style.display = 'none';
         // TODO tell the server the game is cancelled, do nothing further.
         // the server will handle telling the other player that it was declined.
+        console.log(`Challenge declined between ${challenger} and ${challenged}`);
+        // Make a POST request to send a challenge
+        fetch('/lobby/challengeDecline', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
+        }).then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
     };
+}
+
+// TODO
+function closeNotification(){
+    console.error("not implemented");
 }
 
 function loadLobbyExample(){
@@ -171,7 +138,7 @@ function loadLobbyExample(){
 
 const board = document.getElementById('board');
 const status = document.getElementById('status');
-selectedGame = "Game1"
+// selectedGame = "Game1"
 updateAvailableGames();
 
 if (board != null && status != null){
@@ -194,12 +161,22 @@ eventSource.onmessage = (event) => {
     switch (data.type) {
         case "challenge":
             // Give notification that user was challenged
-            showNotification(data.challenged);
+            showNotification(data.challenger, data.challenged);
+            break;
+        case "challengeAccept":
+            // go to the game screen
+            window.location.href = "tictactoe.html";
+            closeNotification();
+            break;
+        case "challengeDeclined":
+            challengePlayerCancelled(data.challenger, data.challenged);
+            closeNotification();
             break;
         case "gameState":
             // Update the GameState UI
             fetchGameState();
             break;
+        
         default:
             break;
     }

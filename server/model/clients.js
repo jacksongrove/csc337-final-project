@@ -9,7 +9,7 @@ const clientMap = new Map(); // Maps `username` to `response` (client connection
 // occurred to fetch any necessary changes. Only some players should realistically
 // be notified (literally one other player because this is tic-tac-toe)
 function notifyAllClients() {
-    sendEvent({
+    sendEventAll({
         type: 'gameEvent',
         message: 'An event occurred, request new status please.',
     });

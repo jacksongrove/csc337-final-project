@@ -1,21 +1,38 @@
+
 // GameState representing the game. All logic should be done here. This means that
 // the server does not need to keep track of the game rules and logic, instead it
 // should focus on serving requests. This class only simulates the game and contains
 // the state data of the game (but not the users themselves).
 class GameState {
-    constructor(PlayerX, playerO, board = null, currentPlayer = null, gameActive = null, moves = null) {
+    // Map Key:     <player: String>
+    // Map Value:   <game: GameState>
+    static runningGames = new Map();
+
+    constructor(PlayerX, PlayerO, board = null, currentPlayer = null, gameActive = null, moves = null) {
         this.reset();
         // keep track of the players active in this game.
         // this can be used to prevent the wrong player from making a move.
         // This also lets us have an easier time storing statistics about players.
         this.PlayerX = PlayerX;
-        this.playerO = playerO;
+        this.PlayerO = PlayerO;
+
+        
+        if (GameState.runningGames.has(this.PlayerX)){
+            // Game already exists, overwrite
+        }
+        if (GameState.runningGames.has(this.PlayerO)){
+            // Game already exists, overwrite
+        }
+        GameState.runningGames.set(this.PlayerX, this);
+        GameState.runningGames.set(this.PlayerO, this);
 
         if (board != null)
             this.board = board;
         if (currentPlayer != null)
             this.currentPlayer = currentPlayer;
         if (gameActive != null)
+            // NOTE: a game can ONLY be inactive when it is finished and there
+            // either a draw or a winner.
             this.gameActive = gameActive;
         if (moves != null)
             this.moves = moves;
@@ -51,7 +68,7 @@ class GameState {
             }
             if (this.currentPlayer == 'O' && this.PlayerO != asPlayer) {
                 // error if the move O was not made by player O
-                return { error: `${asPlayer} tried to move for ${this.playerO} who is (player O)!` };
+                return { error: `${asPlayer} tried to move for ${this.PlayerO} who is (player O)!` };
             }
             if (this.currentPlayer != 'O' && this.currentPlayer != 'X') {
                 // something has gone wrong, somehow neither an X or O value is set
@@ -61,13 +78,24 @@ class GameState {
                 // return { error: 'GameState current player is neither X nor O!' };
             }
         }
+        // out of bounds
+        if (index < 0 || index > 8) {
+            return { error: 'Index is out of bounds.' };
+        }
+        // cannot place in a cell that is already occupied
         if (this.board[index]) {
             return { error: 'Cell already taken.' };
         }
-
+        // place move
         this.board[index] = this.currentPlayer;
+        // switch current player
         this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+        // register move into history of moves
         this.moves.push(index);
+        // check if there is a winner
+        if (this.checkWinner()) {
+            this.gameActive = false;
+        }
         return { success: true };
     }
 
@@ -83,15 +111,35 @@ class GameState {
                 return this.board[a];
             }
         }
-        return this.board.includes(null) ? null : 'Draw';
+        return this.isDraw() ? 'Draw' : null;
     }
 
     getWinner() {
-        if (this.gameActive == false)
-            return this.currentPlayer;
+        const res = this.checkWinner();
+        if (res == 'X')
+            return this.PlayerX;
+        if (res == 'O')
+            return this.PlayerO;
         else
             return null;
     }
+
+    isDraw() {
+        return !this.board.includes(null);
+    }
+
+    removeGame() {
+        if (!GameState.runningGames.has(this.PlayerX)) {
+            console.error("this game is not currently a running game, cannot remove.");
+        } else {
+            GameState.runningGames.delete(this.PlayerX);
+        }
+        if (!GameState.runningGames.has(this.PlayerO)) {
+            console.error("this game is not currently a running game, cannot remove.");
+        } else {
+            GameState.runningGames.delete(this.PlayerO);
+        }
+    };
 }
 
 module.exports = GameState;
