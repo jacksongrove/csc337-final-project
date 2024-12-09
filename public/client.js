@@ -146,42 +146,47 @@ if (board != null && status != null){
 
 // Just slap this on for now
 // TODO integrate this properly
-const eventSource = new EventSource('/event/events');
+let eventSource = null;
+
+// make sure we open the even source when we enter any page
+document.addEventListener('DOMContentLoaded', function() {
+    eventSource = new EventSource('/event/events');
+    eventSource.onmessage = (event) => {
+        console.log('Update received:', event.data);
+        let data = JSON.parse(event.data);
+        // check the event type
+        switch (data.type) {
+            case "challenge":
+                // Give notification that user was challenged
+                showNotification(data.challenger, data.challenged);
+                break;
+            case "challengeAccept":
+                // go to the game screen
+                window.location.href = "tictactoe.html";
+                closeNotification();
+                break;
+            case "challengeDeclined":
+                challengePlayerCancelled(data.challenger, data.challenged);
+                closeNotification();
+                break;
+            case "gameState":
+                // Update the GameState UI
+                fetchGameState();
+                break;
+            default:
+                break;
+        }
+        
+    };
+    
+    eventSource.onerror = (error) => {
+        console.error('SSE error:', error);
+    };
+}, false);
 
 // make sure we close the event source when we leave the page
-window.onbeforeunload = function () {
-    eventSource.close();
-};
-
-eventSource.onmessage = (event) => {
-    console.log('Update received:', event.data);
-    let data = JSON.parse(event.data);
-    // check the event type
-    switch (data.type) {
-        case "challenge":
-            // Give notification that user was challenged
-            showNotification(data.challenger, data.challenged);
-            break;
-        case "challengeAccept":
-            // go to the game screen
-            window.location.href = "tictactoe.html";
-            closeNotification();
-            break;
-        case "challengeDeclined":
-            challengePlayerCancelled(data.challenger, data.challenged);
-            closeNotification();
-            break;
-        case "gameState":
-            // Update the GameState UI
-            fetchGameState();
-            break;
-        
-        default:
-            break;
+window.addEventListener("beforeunload", (event) => {
+    if (eventSource != null) {
+        eventSource.close();
     }
-    
-};
-
-eventSource.onerror = (error) => {
-    console.error('SSE error:', error);
-};
+});
