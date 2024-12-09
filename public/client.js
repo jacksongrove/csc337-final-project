@@ -194,7 +194,7 @@ eventSource.onmessage = (event) => {
     switch (data.type) {
         case "challenge":
             // Give notification that user was challenged
-            showNotification(data.message);
+            showNotification(data.challenged);
             break;
         case "gameState":
             // Update the GameState UI
