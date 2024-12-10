@@ -35,5 +35,4 @@ app.listen(port,host, () => {
     console.log(`Example app listening at http://${printURL}:${port}`)
 });
 
-console.log(`Connecting to MongoDB at "${config.mongoUrl}"`);
 db.connectToDb(config.mongoUrl);

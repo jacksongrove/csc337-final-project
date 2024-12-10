@@ -30,6 +30,7 @@ const GameModelDB = mongoose.model("GameState", GameSchema);
 // Function to connect to the database
 async function connectToDb(mongoUrl) {
     try {
+        console.log(`Connecting to MongoDB at "${config.mongoUrl}"`);
         await mongoose.connect(mongoUrl);
         console.log("Connected to the database!");
     } catch (error) {
@@ -40,12 +41,19 @@ async function connectToDb(mongoUrl) {
 
 // async optional
 async function storeAccount(accountObj) {
-    let accountMongoose = _accountObjectToMongoose(accountObj);
-    // return a promise
-    return accountMongoose.save().then(result => {
-        // TODO error handling
-        return;
-    });
+    try {
+        let accountMongoose = _accountObjectToMongoose(accountObj);
+        // return a promise
+        return accountMongoose.save().then(result => {
+            // TODO error handling
+            return;
+        });
+    } catch (error) {
+        console.error("Account could not be stored because mongoose returned an error");
+        
+        return null;
+    }
+    
 }
 
 // async recommended
