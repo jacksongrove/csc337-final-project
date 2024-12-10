@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expose Node.js app on port 3000
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/my_db_name # Internal MongoDB connection string
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    command: mongod --quiet --logpath /dev/null
+    ports:
+      - "27017:27017" # Expose MongoDB only to this container
+    volumes:
+      - mongo-data:/data/db # Persistent storage for MongoDB
+    networks:
+      - app-network
+
+# Network super required because the nodejs frontend needs to communicate with
+# the backend database
+networks:
+  app-network:
+    driver: bridge
+
+# Obviously we want to keep the database storage between docker runs. So lets
+# make sure it's stored
+volumes:
+  mongo-data:

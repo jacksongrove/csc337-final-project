@@ -1,0 +1,7 @@
+Dockerfile
+docker-compose.yml
+.vscode/
+docs/
+.gitignore
+README.md
+StatusUpdate.txt

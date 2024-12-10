@@ -6,10 +6,6 @@ const account = require('../model/account');
 const gameState = require('../model/gameState');
 const crypto = require('crypto'); // for hashing games easily
 
-// Connect to some server somewhere with the DB
-// "sudo service mongod start" if the server has MongoDB
-const URL = "mongodb://127.0.0.1:27017/my_db_name";
-
 const AccountSchema = new mongoose.Schema({
     name: String,
     username: String,
@@ -32,9 +28,9 @@ const AccountModelDB = mongoose.model("Account", AccountSchema);
 const GameModelDB = mongoose.model("GameState", GameSchema);
 
 // Function to connect to the database
-async function connectToDb() {
+async function connectToDb(mongoUrl) {
     try {
-        await mongoose.connect(URL);
+        await mongoose.connect(mongoUrl);
         console.log("Connected to the database!");
     } catch (error) {
         console.error("Error connecting to the database:", error);
