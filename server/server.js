@@ -1,10 +1,16 @@
-// const exp = require("constants");
-const config = require('./config');
 const express = require("express");
 const cookies = require("cookie-parser");
 
+// force the directory to be correct no matter where it is located
+try {
+    process.chdir(__dirname);
+    process.chdir("..");
+    console.log('Current working directory:', process.cwd());
+} catch (error) {
+    console.log('Could not change working directory');
+}
 
-// const fs = require('fs');
+const config = require('./config');
 const app  = express();
 const port = config.port;
 const host = config.host;
