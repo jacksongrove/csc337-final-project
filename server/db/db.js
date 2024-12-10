@@ -1,6 +1,7 @@
 // work in progress. Having a dependency on MongoDB makes development more complicated
 // so it will likely need to be discussed/prepared for all IDEs in use to correctly
 // be configured.
+const config = require('../config');
 const mongoose = require('mongoose');
 const account = require('../model/account');
 const gameState = require('../model/gameState');
