@@ -2,6 +2,8 @@ Dockerfile
 docker-compose.yml
 .vscode/
 docs/
+# Let docker get the correct node modules
+node_modules/ 
 .gitignore
 README.md
 StatusUpdate.txt
