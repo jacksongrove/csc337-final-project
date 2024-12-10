@@ -238,12 +238,17 @@ async function getAllOnlineUsers(){
     const allOnlineAccounts = await Promise.all(userPromises);
     // strip away all but the necessary data (exclude personal data)
     allOnlineAccounts.forEach(account => {
-        allOnlineUsers.push({
-            name: account.name,
-            username: account.username,
-            wins: account.wins,
-            losses: account.losses,
-        });
+        try {
+            allOnlineUsers.push({
+                name: account.name,
+                username: account.username,
+                wins: account.wins,
+                losses: account.losses,
+            });
+        } catch (error) {
+            console.error("Invalid account found " + account);
+        }
+        
     });
     return allOnlineUsers;
 }
