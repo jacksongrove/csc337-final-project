@@ -177,8 +177,17 @@ if (board != null && status != null){
 // TODO integrate this properly
 let eventSource = null;
 
-// make sure we open the even source when we enter any page
+// make sure we open the even source when we enter any where we are signed in
 document.addEventListener('DOMContentLoaded', function() {
+    // Get the current path
+    const currentPath = window.location.pathname;
+
+    // Only attach EventSource for specific pages
+    const allowedPages = ['/lobby.html', '/leaderboard.html', '/game.html'];
+
+    if (!allowedPages.includes(currentPath))
+        return;
+
     eventSource = new EventSource('/event/events');
     eventSource.onmessage = (event) => {
         console.log('Update received:', event.data);
@@ -207,7 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
             default:
                 break;
         }
-        
     };
     
     eventSource.onerror = (error) => {
@@ -216,20 +224,23 @@ document.addEventListener('DOMContentLoaded', function() {
 }, false);
 
 // handle a log out event
-document.getElementById('logoutButton').addEventListener('click', async () => {
-    try {
-        const response = await fetch('/auth/logout', { method: 'POST' });
-        if (response.ok) {
-            // Redirect to the login page after successful logout (the server
-            // should ask for the same thing)
-            window.location.href = '/login.html';
-        } else {
-            console.error('Failed to log out:', await response.json());
+if (document.getElementById('logoutButton') != undefined) {
+    document.getElementById('logoutButton').addEventListener('click', async () => {
+        try {
+            const response = await fetch('/auth/logout', { method: 'POST' });
+            if (response.ok) {
+                // Redirect to the login page after successful logout (the server
+                // should ask for the same thing)
+                window.location.href = '/login.html';
+            } else {
+                console.error('Failed to log out:', await response.json());
+            }
+        } catch (error) {
+            console.error('An error occurred while logging out:', error);
         }
-    } catch (error) {
-        console.error('An error occurred while logging out:', error);
-    }
-});
+    });
+}
+
 
 // make sure we close the event source when we leave the page
 window.addEventListener("beforeunload", (event) => {
