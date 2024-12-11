@@ -232,7 +232,12 @@ async function getAllOnlineUsers(){
 
     allOnlineClients.forEach((client, username) => {
         const accountPromise = db.loadAccount(username);
-        userPromises.push(accountPromise);
+        // only push as an online client if they are logged in. Do not count
+        // accounts that have a client connection but no login yet.
+        if (accountPromise) {
+            userPromises.push(accountPromise);
+        }
+        
     });
     // Wait for all promises to resolve
     const allOnlineAccounts = await Promise.all(userPromises);
