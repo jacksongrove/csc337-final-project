@@ -25,6 +25,7 @@ const gameRoutes = require('./routes/game');
 const authRoutes = require('./routes/auth');
 const lobbyRoutes = require('./routes/lobby');
 const eventRoutes = require('./routes/event');
+const leaderboardRoutes = require('./routes/leaderboard');
 
 const db = require('./db/db');
 
@@ -34,6 +35,7 @@ app.use('/game', checkAuth, gameRoutes);
 app.use('/auth', authRoutes);
 app.use('/lobby', checkAuth, lobbyRoutes);
 app.use('/event', checkAuth, eventRoutes);
+app.use('/leaderboard', checkAuth, leaderboardRoutes);
 
 // Route to serve login.html
 app.get('/signup.html', skipLogin, (req, res) => {

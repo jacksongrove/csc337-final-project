@@ -6,7 +6,7 @@
     <title>Tic-Tac-Toe</title>
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/tictactoe.css">
 </head>
-<body>
+<body onload="javascript:loadLeaderboard()">
     <div id="current-user">
         Signed in as: <span id="name"></span> <span id="username"></span>
     </div>
@@ -20,18 +20,7 @@
             <th scope="col">Player Name</th>
             <th scope="col"> Win:loss</th>
         </tr>
-        <tr>
-            <th scope="row">Player 1</th>
-            <td>3.0</td>
-        </tr>
-        <tr>
-            <th scope="row">Player 2</th>
-            <td>1.0</td>
-        </tr>
-        <tr>
-            <th scope="row">Player 3</th>
-            <td>0.5</td>
-        </tr>
+        <!-- Rows will be populated dynamically -->
     </table>
 
     <!-- placeholders -->

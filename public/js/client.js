@@ -191,7 +191,7 @@ function shouldListenEvents() {
     const currentPath = window.location.pathname;
 
     // Only attach EventSource for specific pages
-    const allowedPages = ['/lobby.html', '/leaderboard.html', '/game.html'];
+    const allowedPages = ['/lobby.html', '/leaderboard.html', '/tictactoe.html'];
 
     return allowedPages.includes(currentPath);
 }
@@ -237,7 +237,7 @@ function shouldShowUsername() {
     const currentPath = window.location.pathname;
 
     // Only attach EventSource for specific pages
-    const allowedPages = ['/lobby.html', '/leaderboard.html', '/game.html'];
+    const allowedPages = ['/lobby.html', '/leaderboard.html', '/tictactoe.html'];
 
     return allowedPages.includes(currentPath);
 }
@@ -345,6 +345,40 @@ function getCookie(name) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
     return null;
+}
+
+// Function to fetch leaderboard data and populate the table
+async function loadLeaderboard() {
+    try {
+        const response = await fetch('/leaderboard'); // Make GET request
+        if (!response.ok) throw new Error('Failed to load leaderboard');
+        
+        const data = await response.json(); // Parse the response as JSON
+        const accounts = data.accounts
+        const table = document.getElementById('lb');
+        
+        accounts.forEach(player => {
+            // Create a new row for each player
+            const row = document.createElement('tr');
+            
+            // Create columns for player's name and win:loss record
+            const nameCell = document.createElement('th');
+            nameCell.scope = 'row';
+            nameCell.textContent = player.name; // Player name
+            
+            const winLossCell = document.createElement('td');
+            winLossCell.textContent = `${player.wins}:${player.losses}`; // Win:loss
+
+            // Append the cells to the row
+            row.appendChild(nameCell);
+            row.appendChild(winLossCell);
+            
+            // Append the row to the table
+            table.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error loading leaderboard:', error);
+    }
 }
 
 

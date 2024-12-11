@@ -190,6 +190,40 @@ async function doesAccountExist(username) {
     return true;
 }
 
+async function getAllAccounts() {
+    const accountsMongoose = await AccountModelDB.find();
+    const accountObj = [];
+    accountsMongoose.forEach(accountMongoose => {
+        accountObj.push(new account.Account(accountMongoose.name, accountMongoose.username,
+            accountMongoose.wins, accountMongoose.losses));
+    });
+    return accountObj;
+}
+
+async function incrementWin(username) {
+    const account = await AccountModelDB.findOne({ username });
+    if (account) {
+        account.wins += 1; // Increment the wins counter
+        await account.save(); // Save the updated account back to the database
+        return account;
+    } else {
+        console.error(`Account with username ${username} not found.`);
+        return null;
+    }
+}
+
+async function incrementLoss(username) {
+    const account = await AccountModelDB.findOne({ username });
+    if (account) {
+        account.losses += 1; // Increment the losses counter
+        await account.save(); // Save the updated account back to the database
+        return account;
+    } else {
+        console.error(`Account with username ${username} not found.`);
+        return null;
+    }
+}
+
 
 // Exported methods
 module.exports = {
@@ -201,4 +235,7 @@ module.exports = {
     storeGameState,
     loadGameState,
     doesAccountExist,
+    getAllAccounts,
+    incrementWin,
+    incrementLoss
 };

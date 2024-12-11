@@ -103,6 +103,17 @@ router.post('/move', async (req, res) => {
         clients.sendEventToUserName({type: "gameState"}, game.PlayerX);
         clients.sendEventToUserName({type: "gameState"}, game.PlayerO);
 
+        if (game.getWinner()) {
+            // retrieve win/lose usernames
+            const winnerUsername = winner;
+            const loserUsername = winner == game.PlayerX ? game.PlayerO : game.PlayerX;
+
+            // update wins and losses
+            db.incrementWin(winnerUsername);
+            db.incrementLoss(loserUsername);
+        }
+        
+
         // TODO possibly remove
         if (game.getWinner() || game.isDraw()) {
             console.log(`Game "${game.PlayerX}-${game.PlayerO}" ended`);
