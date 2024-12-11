@@ -10,6 +10,8 @@ Final project for CSC 337 - Web Development
 ## Run instructions
 The easiest way to run the project is using Docker. With docker installed on the machine the project can be deployed using the command:
 ```bash
+# Make sure your docker services are running.
+# For example on Windows it's necessary to open the docker executable to start the service and avoid errors.
 docker-compose up --build
 ```
 This brings down the docker container while keeping account data.
