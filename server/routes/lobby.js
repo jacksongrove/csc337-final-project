@@ -157,7 +157,6 @@ router.post('/challengeDecline', async (req, res) => {
         // /tictactoe.html they will see their game automatically. Furthermore
         // the client should automatically send them to the game.
 
-
         res.status(200).json({ message: 'Decline challenge sent successfully.' });
     } catch (error) {
         console.error('Error handling challenge request:', error);
@@ -225,6 +224,7 @@ function notifyLobbyUpdate(allOnlineUsers){
     );
 }
 
+// Get all online users 
 async function getAllOnlineUsers(){
     const allOnlineUsers = [];
     const allOnlineClients = clients.getAllClients();
@@ -253,8 +253,15 @@ async function getAllOnlineUsers(){
     return allOnlineUsers;
 }
 
+// Add a handler to the clients model to notify all users when the lobby changes.
 clients.setOnClientChange(() => {
-    getAllOnlineUsers().then(function(allOnlineUsers) {notifyLobbyUpdate(allOnlineUsers)});
+    try {
+        getAllOnlineUsers().then(function(allOnlineUsers) {notifyLobbyUpdate(allOnlineUsers)});
+    } catch (error) {
+        console.error("Error while notifying the players of the lobby state:", error);
+        return;
+    }
+    
 });
 
 module.exports = router;

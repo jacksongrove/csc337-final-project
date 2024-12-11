@@ -6,47 +6,59 @@ const router = express.Router();
 
 // POST /signup
 router.post('/signup', async (req, res) => {
-    const { name, username} = req.body;
-
-    // Validate input
-    if (!name || !username) {
-        return res.status(400).json({ message: 'Name and Username is required.' });
-    }
-
-    // Check if user already exists
-    // try loading account
-    let loadedAccountResult = await db.loadAccount(username);
-    if (loadedAccountResult != null) {
-        return res.status(409).json({ message: 'User already exists.' });
-    }
-
-    // Add the user to the database
-    let newUser = new account.Account(name, username, 0, 0);
-    // TODO temp await, can be potentially skipped
-    await db.storeAccount(newUser);
+    try {
+        const { name, username} = req.body;
     
-    res.cookie('authToken', username, { httpOnly: false});
-    res.status(201).json({ message: 'User created successfully.' });
+        // Validate input
+        if (!name || !username) {
+            return res.status(400).json({ message: 'Name and Username is required.' });
+        }
+    
+        // Check if user already exists
+        // try loading account
+        let loadedAccountResult = await db.loadAccount(username);
+        if (loadedAccountResult != null) {
+            return res.status(409).json({ message: 'User already exists.' });
+        }
+    
+        // Add the user to the database (name username wins losses)
+        let newUser = new account.Account(name, username, 0, 0);
+        // wait for the database to store it. Once it is a success then we can
+        // proceed.
+        await db.storeAccount(newUser);
+        
+        res.cookie('authToken', username, { httpOnly: false});
+        res.status(201).json({ message: 'User created successfully.' });
+    } catch (error) {
+        console.error('Error handling signup request:', error);
+        res.status(500).json({ message: 'An error occurred.' });
+    }
 });
 
 // POST /login
 router.post('/login', async (req, res) => {
-    const { username } = req.body;
+    try {
+        const { username } = req.body;
 
-    // Validate input
-    if (!username) {
-        return res.status(400).json({ message: 'Username is required.' });
+        // Validate input
+        if (!username) {
+            return res.status(400).json({ message: 'Username is required.' });
+        }
+        
+        // try loading account
+        let loadedAccountResult = await db.loadAccount(username);
+        if (loadedAccountResult == null) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        res.cookie('authToken', username, { httpOnly: false});
+
+        res.status(200).json({ message: 'Login successful.' });
+    } catch (error) {
+        console.error('Error handling login request:', error);
+        res.status(500).json({ message: 'An error occurred.' });
     }
     
-    // try loading account
-    let loadedAccountResult = await db.loadAccount(username);
-    if (loadedAccountResult == null) {
-        return res.status(404).json({ message: 'User not found.' });
-    }
-
-    res.cookie('authToken', username, { httpOnly: false});
-
-    res.status(200).json({ message: 'Login successful.' });
 });
 
 module.exports = router;
