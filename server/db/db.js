@@ -63,9 +63,8 @@ async function storeAccount(accountObj) {
 // Async function to load an account by username
 async function loadAccount(username) {
     try {
-        let userDocument = await AccountModelDB.findOne({username})
-        let accountMongoose = userDocument;
-        if (result == null)
+        let accountMongoose = await AccountModelDB.findOne({username})
+        if (accountMongoose == null)
             return null; // db could not find name. Null loaded instead
         let accountObject = _accountMongooseToObject(accountMongoose);
         return accountObject;
@@ -182,6 +181,14 @@ function _generateGameStateHash(gameStateObj) {
     return hash;
 };
 
+// check if account exists by asking the database
+async function doesAccountExist(username) {
+    const account = await loadAccount(username);
+    if (!account) {
+        return false;
+    }
+    return true;
+}
 
 
 // Exported methods
@@ -193,4 +200,5 @@ module.exports = {
     loadAccount,
     storeGameState,
     loadGameState,
+    doesAccountExist,
 };

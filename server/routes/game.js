@@ -19,16 +19,6 @@ function validateUsername(username, res) {
     return true;
 }
 
-// check if account exists by asking the database
-async function doesAccountExist(username, res) {
-    const account = await db.loadAccount(username);
-    if (!account) {
-        res.status(404).json({ message: 'User not found.' });
-        return false;
-    }
-    return true;
-}
-
 // Route for getting the state. A player will call this when it needs to get
 // the current state of the game board. A player will give a gameID as a string
 // and will receive JSON containing the state of the game.

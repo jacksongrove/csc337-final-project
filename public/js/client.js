@@ -215,6 +215,22 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 }, false);
 
+// handle a log out event
+document.getElementById('logoutButton').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/auth/logout', { method: 'POST' });
+        if (response.ok) {
+            // Redirect to the login page after successful logout (the server
+            // should ask for the same thing)
+            window.location.href = '/login.html';
+        } else {
+            console.error('Failed to log out:', await response.json());
+        }
+    } catch (error) {
+        console.error('An error occurred while logging out:', error);
+    }
+});
+
 // make sure we close the event source when we leave the page
 window.addEventListener("beforeunload", (event) => {
     if (eventSource != null) {
