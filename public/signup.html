@@ -5,27 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/tictactoe.css">
+    <link id="cssFile" rel="stylesheet" type="text/css" href="css/signup.css">
 </head>
 <body>
     <!-- Title -->
     <h1>Sign in</h1>
-    <form action="/auth/signup" method="POST">
+    <form id="signinForm">
         <!-- Name input -->
         <div>
             <span>name:</span>
             <span>
-                <input id="name" required name="name" type="text">
+                <input id="nameInput" required name="name" type="text">
             </span>
         </div>
         <!-- Username input -->
         <div>
             <span>username:</span>
             <span>
-                <input id="username" required name="username" type="text">
+                <input id="usernameInput" required name="username" type="text">
             </span>
         </div>
         <input type="submit"></button>
     </form>
+    
+    <!-- Error message section -->
+    <div id="errorMessage" class="signupError"></div>
+
     <button onclick="location.href='login.html'">Log in instead</button>
     <!-- Handle accept and reject scenario -->
     

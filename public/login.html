@@ -5,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/tictactoe.css">
+    <link id="cssFile" rel="stylesheet" type="text/css" href="css/signup.css">
 </head>
 <body>
     <!-- Title -->
     <h1>Log in</h1>
-    <form action="/auth/login" method="POST">
+    <form id="loginForm">
         <!-- Username input -->
         <div>
             <span>username:</span>
             <span>
-                <input required type="text" name="username">
+                <input required id="usernameInput" type="text" name="username">
             </span>
         </div>
         <input type="submit" value="Submit (Log in)"></button>
     </form>
+    
+    <!-- Error message section -->
+    <div id="errorMessage" class="signupError"></div>
+
     <button onclick="location.href='signup.html'">sign up instead</button>
 
     <script src="js/client.js"></script>

@@ -274,6 +274,72 @@ if (document.getElementById('logoutButton') != undefined) {
     });
 }
 
+if (document.getElementById('loginForm') != undefined) {
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent the form from reloading the page
+        // if there is a login form then there is a username input
+        const username = document.getElementById('usernameInput').value;
+    
+        try {
+            // We will manually do what <form> does
+            const response = await fetch('/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            });
+    
+            if (response.ok) {
+                // If login successful, redirect to lobby
+                window.location.href = '/lobby.html';
+            } else {
+                // If login fails, show the error message
+                const data = await response.json();
+                // we assume an error message box text exists
+                document.getElementById('errorMessage').textContent = `Error: ${data.message}`;
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            document.getElementById('errorMessage').textContent = 'An error occurred. Please try again later.';
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+    });
+}
+
+if (document.getElementById('signinForm') != undefined) {
+    document.getElementById('signinForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent the form from reloading the page
+        // if there is a signin form then there is a username input
+        const name = document.getElementById('nameInput').value;
+        const username = document.getElementById('usernameInput').value;
+    
+        try {
+            // We will manually do what <form> does
+            const response = await fetch('/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            });
+    
+            if (response.ok) {
+                // If login successful, redirect to lobby
+                window.location.href = '/lobby.html';
+            } else {
+                // If login fails, show the error message
+                const data = await response.json();
+                // we assume an error message box text exists
+                document.getElementById('errorMessage').textContent = `Error: ${data.message}`;
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error during signup:', error);
+            document.getElementById('errorMessage').textContent = 'An error occurred. Please try again later.';
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+    });
+}
+
+
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
