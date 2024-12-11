@@ -179,15 +179,24 @@ let eventSource = null;
 
 // make sure we open the even source when we enter any where we are signed in
 document.addEventListener('DOMContentLoaded', function() {
+    if (shouldListenEvents())
+        setupEvents();
+    if (shouldShowUsername)
+        updateUsername();
+    
+}, false);
+
+function shouldListenEvents() {
     // Get the current path
     const currentPath = window.location.pathname;
 
     // Only attach EventSource for specific pages
     const allowedPages = ['/lobby.html', '/leaderboard.html', '/game.html'];
 
-    if (!allowedPages.includes(currentPath))
-        return;
+    return allowedPages.includes(currentPath);
+}
 
+function setupEvents() {
     eventSource = new EventSource('/event/events');
     eventSource.onmessage = (event) => {
         console.log('Update received:', event.data);
@@ -221,7 +230,31 @@ document.addEventListener('DOMContentLoaded', function() {
     eventSource.onerror = (error) => {
         console.error('SSE error:', error);
     };
-}, false);
+}
+
+function shouldShowUsername() {
+    // Get the current path
+    const currentPath = window.location.pathname;
+
+    // Only attach EventSource for specific pages
+    const allowedPages = ['/lobby.html', '/leaderboard.html', '/game.html'];
+
+    return allowedPages.includes(currentPath);
+}
+
+function updateUsername() {
+    // Fetch username from cookies
+    const username = getCookie('authToken');
+    const name = getCookie('name');
+
+    // Update UI with username
+    if (document.getElementById('username') != undefined) {
+        document.getElementById('username').textContent = username;
+    }
+    if (document.getElementById('name') != undefined) {
+        document.getElementById('name').textContent = name;
+    }       
+}
 
 // handle a log out event
 if (document.getElementById('logoutButton') != undefined) {
@@ -239,6 +272,13 @@ if (document.getElementById('logoutButton') != undefined) {
             console.error('An error occurred while logging out:', error);
         }
     });
+}
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
 }
 
 

@@ -28,6 +28,8 @@ router.post('/signup', async (req, res) => {
         await db.storeAccount(newUser);
         
         res.cookie('authToken', username, { httpOnly: false});
+        res.cookie('name', loadedAccountResult.name, { httpOnly: false});
+
         res.redirect('/lobby.html');
         // res.status(201).json({ message: 'User created successfully.' });
     } catch (error) {
@@ -53,6 +55,7 @@ router.post('/login', async (req, res) => {
         }
 
         res.cookie('authToken', username, { httpOnly: false});
+        res.cookie('name', loadedAccountResult.name, { httpOnly: false});
 
         return res.redirect('/lobby.html');
         // res.status(200).json({ message: 'Login successful.' });
@@ -60,7 +63,6 @@ router.post('/login', async (req, res) => {
         console.error('Error handling login request:', error);
         res.status(500).json({ message: 'An error occurred.' });
     }
-    
 });
 
 // POST /logout
