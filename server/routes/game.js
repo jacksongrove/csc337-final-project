@@ -108,9 +108,11 @@ router.post('/move', async (req, res) => {
             const winnerUsername = winner;
             const loserUsername = winner == game.PlayerX ? game.PlayerO : game.PlayerX;
 
-            // update wins and losses
-            db.incrementWin(winnerUsername);
-            db.incrementLoss(loserUsername);
+            if (winnerUsername != loserUsername){
+                // update wins and losses
+                db.incrementWin(winnerUsername);
+                db.incrementLoss(loserUsername);
+            }
         }
         
 
