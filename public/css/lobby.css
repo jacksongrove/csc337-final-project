@@ -34,7 +34,12 @@ h1 {
 }
 
 #leaderboardButton:hover {
-    color: #fff200;
+    color: #007bff;
+}
+
+#lobbyButton:hover {
+    color: #007bff;
+    background-color: transparent;
 }
 
 #logoutButton:hover {
@@ -49,7 +54,7 @@ h1 {
     border-radius: 8px;
     background-color: #fff;
     padding: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px #0000001a;
 }
 
 /* Individual player entry */
