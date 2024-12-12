@@ -8,9 +8,11 @@
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/lobby.css">
 </head>
 <body onload="javascript:updateOnlineUsers()">
-    <div id="current-user">
-        Signed in as: <span id="name"></span> <span id="username"></span>
-    </div>
+    <nav id="navbar">
+        <span id="current-user">Signed in as: <strong>test test</strong></span>
+        <button id="leaderboardButton" onclick="location.href='leaderboard.html'">Leaderboard</button>
+        <button id="logoutButton">Logout</button>
+    </nav>
     <h1>Online Players</h1>
     <div id="players">
         <!-- Player list will be loaded dynamically -->
@@ -24,9 +26,7 @@
 
     <!-- placeholders -->
     <div></div>
-    <button id="logoutButton">Logout</button>
-    <button onclick="location.href='leaderboard.html'">go to leaderboard</button>
-
+    
     <script src="js/client.js"></script>
 </body>
 </html>

@@ -155,7 +155,7 @@ function loadLobby(players){
                 <strong>${player.name}</strong><br>
                 <small>${player.username}</small>
             </div>
-            <button onclick="challengePlayer('${player.username}')">Challenge</button>
+            <button id="challengeButton" onclick="challengePlayer('${player.username}')">Challenge</button>
         `;
         playersDiv.appendChild(playerDiv);
     });
