@@ -28,7 +28,7 @@ router.post('/signup', async (req, res) => {
         await db.storeAccount(newUser);
         
         res.cookie('authToken', username, { httpOnly: false});
-        res.cookie('name', loadedAccountResult.name, { httpOnly: false});
+        res.cookie('name', name, { httpOnly: false});
 
         res.redirect('/lobby.html');
         // res.status(201).json({ message: 'User created successfully.' });

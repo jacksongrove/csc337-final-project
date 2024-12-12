@@ -318,7 +318,7 @@ if (document.getElementById('signinForm') != undefined) {
             const response = await fetch('/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username })
+                body: JSON.stringify({ name, username })
             });
     
             if (response.ok) {
