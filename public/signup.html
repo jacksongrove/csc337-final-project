@@ -8,22 +8,22 @@
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/signup.css">
 </head>
 <body>
+    <nav id="navbar">
+        <p>
+    </nav>
     <!-- Title -->
-    <h1>Sign in</h1>
+    <h1 id="title">Tic Tac Toe</h1>
+    <h1>Sign Up</h1>
     <form id="signinForm">
         <!-- Name input -->
         <div>
-            <span>name:</span>
-            <span>
+            <span>Display Name:</span>
                 <input id="nameInput" required name="name" type="text">
-            </span>
         </div>
         <!-- Username input -->
         <div>
-            <span>username:</span>
-            <span>
+            <span>Username:</span>
                 <input id="usernameInput" required name="username" type="text">
-            </span>
         </div>
         <input type="submit"></button>
     </form>
@@ -31,7 +31,7 @@
     <!-- Error message section -->
     <div id="errorMessage" class="signupError"></div>
 
-    <button onclick="location.href='login.html'">Log in instead</button>
+    <p id="otherOption">Already have an account?<span onclick="location.href='login.html'">Log In</span></p>
     <!-- Handle accept and reject scenario -->
     
     <script src="js/client.js"></script>

@@ -1,4 +1,160 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    background: #fdfdfd;
+    color: #1c1c1c;
+}
+
+/* Navigation Bar */
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+/* Title styling */
+#title {
+    margin-top: 30px;
+    margin-bottom: 0;
+    font-size: 70px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: #202020;
+    background: linear-gradient(45deg, #ff6ec4, #7873f5, #76e3ea, #f5d76e);
+    background-size: 200% 200%;
+    animation: holo-animate 20s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes holo-animate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Login block styling */
+#loginForm {
+    max-width: 400px;
+    margin: 50px auto;
+    margin-bottom: 0;
+    padding: 30px;
+    background: #ffffff1a;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px #0000004d;
+    backdrop-filter: blur(10px);
+}
+
+#loginForm div {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#loginForm span {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+#loginForm input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #f5f5f5;
+    font-size: 14px;
+}
+
+#loginForm input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(45deg, #76e3ea, #ff6ec4);
+    cursor: pointer;
+}
+
+#loginForm input[type="submit"]:hover {
+    background: linear-gradient(45deg, rgb(102, 219, 227), #f06cbc);
+}
+
+/* Sign In block styling */
+#signinForm {
+    max-width: 400px;
+    margin: 50px auto;
+    margin-bottom: 0;
+    padding: 30px;
+    background: #ffffff1a;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px #0000004d;
+    backdrop-filter: blur(10px);
+}
+
+#signinForm div {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#signinForm span {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+#signinForm input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #f5f5f5;
+    font-size: 14px;
+}
+
+#signinForm input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(45deg, #76e3ea, #ff6ec4);
+    cursor: pointer;
+}
+
+#signinForm input[type="submit"]:hover {
+    background: linear-gradient(45deg, rgb(102, 219, 227), #f06cbc);
+}
+
+/* Sign-Up / Login button (other option) */
+span {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    background: none;
+    color: #1a86f1;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+span:hover {
+    color: #7873f5;
+}
+
+#otherOption {
+    font-weight: bold;
+}
+
+/* Error Message */
 .signupError {
-    color: red;
-    display: none;
+    color: #ff6ec4;
+    font-size: 14px;
+    margin-top: 20px;
 }

@@ -4,27 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
-    <link id="cssFile" rel="stylesheet" type="text/css" href="css/tictactoe.css">
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/signup.css">
 </head>
 <body>
+    <nav id="navbar">
+        <p>
+    </nav>
     <!-- Title -->
+    <h1 id="title">Tic Tac Toe</h1>
     <h1>Log in</h1>
     <form id="loginForm">
         <!-- Username input -->
         <div>
-            <span>username:</span>
-            <span>
+            <span>Username:</span>
                 <input required id="usernameInput" type="text" name="username">
-            </span>
         </div>
-        <input type="submit" value="Submit (Log in)"></button>
+        <input type="submit" value="Submit"></button>
     </form>
     
     <!-- Error message section -->
     <div id="errorMessage" class="signupError"></div>
 
-    <button onclick="location.href='signup.html'">sign up instead</button>
+    <p id="otherOption" >Don't have an account?<span onclick="location.href='signup.html'">Sign Up</span></p>
 
     <script src="js/client.js"></script>
 </body>
