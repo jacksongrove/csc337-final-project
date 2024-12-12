@@ -26,7 +26,6 @@
     color: white; /* Default color */
     background: none;
     cursor: pointer;
-    transition: background 0.3s ease, -webkit-text-fill-color 0.3s ease;
 }
 
 #leaderboardButton:hover {
