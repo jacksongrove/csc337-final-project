@@ -154,7 +154,7 @@ span:hover {
 
 /* Error Message */
 .signupError {
-    color: #ff6ec4;
+    color: #ff0000;
     font-size: 14px;
     margin-top: 20px;
 }
