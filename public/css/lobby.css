@@ -7,45 +7,6 @@ h1 {
     margin-bottom: 40px;
 }
 
-/* Navigation Bar */
-#navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 10px 20px;
-    color: white;
-}
-
-#navbar #current-user {
-    margin-right: auto;
-    font-size: 14px;
-    color: #ccc;
-}
-
-#navbar button {
-    color: white;
-    background: none;
-    border: none;
-    font-size: 16px;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-#leaderboardButton:hover {
-    color: #007bff;
-}
-
-#lobbyButton:hover {
-    color: #007bff;
-    background-color: transparent;
-}
-
-#logoutButton:hover {
-    color: #e00000;
-}
-
 /* Online Players List */
 #players {
     margin: 20px auto;

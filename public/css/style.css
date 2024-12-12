@@ -1,6 +1,50 @@
 /* GLOBAL STYLE */
 /* This style should apply to all pages to have consistant styling */
 
+/* Navigation Bar */
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+#navbar #current-user {
+    margin-right: auto;
+    font-size: 14px;
+    color: #ccc;
+}
+
+#navbar button {
+    font-size: 16px;
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    color: white; /* Default color */
+    background: none;
+    cursor: pointer;
+    transition: background 0.3s ease, -webkit-text-fill-color 0.3s ease;
+}
+
+#leaderboardButton:hover {
+    background: linear-gradient(45deg, #76e3ea, #ff6ec4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Makes text use gradient */
+}
+
+#lobbyButton:hover {
+    background: linear-gradient(45deg, #76e3ea, #ff6ec4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Makes text use gradient */
+}
+
+#logoutButton:hover {
+    color: #e00000;
+}
+
 /* Challenge button */
 #challengeButton {
     padding: 5px 10px;
@@ -14,7 +58,7 @@
 }
 
 #challengeButton:hover {
-    background: linear-gradient(45deg, #61cbd2, #e468b2);
+    background: linear-gradient(45deg, #0161c8, #f06cbc);
 }
 
 /* Challenge Notifications */
@@ -33,15 +77,16 @@
 #acceptBtn {
     padding: 5px 10px;
     font-size: 14px;
-    background-color: #007bff;
+    background: linear-gradient(45deg, #76e3ea, #ff6ec4);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 #acceptBtn:hover {
-    background-color: #0161c8;
+    background: linear-gradient(45deg, #0161c8, #f06cbc);
+    transform: scale(1.05);
 }
 
 /* Decline challenge button */
@@ -56,5 +101,6 @@
     transition: background-color 0.3s ease;
 }
 #declineBtn:hover {
-    background-color: #c60303;
+    background-color: #b60e0e;
+    transform: scale(1.05);
 }
