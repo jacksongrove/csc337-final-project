@@ -104,3 +104,33 @@ h1 {
     padding: 15px;
     display: none;
 }
+
+/* Accept challenge button */
+#acceptBtn {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#acceptBtn:hover {
+    background-color: #0161c8;
+}
+
+/* Decline challenge button */
+#declineBtn {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #e60000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#declineBtn:hover {
+    background-color: #c60303;
+}
