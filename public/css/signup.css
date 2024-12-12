@@ -128,7 +128,7 @@ body {
 }
 
 #signinForm input[type="submit"]:hover {
-    background: linear-gradient(45deg, rgb(102, 219, 227), #f06cbc);
+    background: linear-gradient(45deg, #61cbd2, #e468b2);
 }
 
 /* Sign-Up / Login button (other option) */

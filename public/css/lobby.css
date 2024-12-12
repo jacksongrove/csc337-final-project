@@ -81,7 +81,7 @@ h1 {
 #challengeButton {
     padding: 5px 10px;
     font-size: 14px;
-    background-color: #007bff;
+    background: linear-gradient(45deg, #76e3ea, #ff6ec4);
     color: white;
     border: none;
     border-radius: 5px;
@@ -90,7 +90,7 @@ h1 {
 }
 
 #challengeButton:hover {
-    background-color: #0161c8;
+    background: linear-gradient(45deg, #61cbd2, #e468b2);
 }
 
 /* Challenge Notifications */
