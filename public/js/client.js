@@ -183,6 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEvents();
     if (shouldShowUsername)
         updateUsername();
+    // ask server if we have any events waiting for us.
+    // TODO
     
 }, false);
 

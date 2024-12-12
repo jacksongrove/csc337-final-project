@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
+    <link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/leaderboard.css">
 </head>
 <body onload="javascript:loadLeaderboard()">
@@ -26,8 +27,11 @@
         <!-- Rows will be populated dynamically -->
     </table>
 
-    <!-- placeholders -->
-    <div></div>
+    <div id="notification">
+        <p id="challengeMessage"></p>
+        <button id="acceptBtn">Accept</button>
+        <button id="declineBtn">Decline</button>
+    </div>
 
     <script src="js/client.js"></script>
 </body>
