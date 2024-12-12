@@ -1,6 +1,12 @@
 /* GLOBAL STYLE */
 /* This style should apply to all pages to have consistant styling */
 
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
 /* Navigation Bar */
 #navbar {
     display: flex;

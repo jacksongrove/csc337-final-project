@@ -5,7 +5,32 @@ body {
     margin: 0;
     background: linear-gradient(120deg, #76e3ea, #7873f5);
     color: #1c1c1c;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+#navbar button {
+    font-size: 16px;
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    color: white; /* Default color */
+    background: #e60000;
+    cursor: pointer;
+}
+
+#quitButton {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #e60000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#quitButton:hover {
+    background-color: #b60e0e;
+    transform: scale(1.05);
 }
 
 /* Title Styling */
