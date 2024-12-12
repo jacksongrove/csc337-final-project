@@ -7,22 +7,19 @@
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/tictactoe.css">
 </head>
 <body>
-    <div id="current-user">
-        Signed in as: <span id="name"></span> <span id="username"></span>
-    </div>
+    <nav id="navbar">
+        <span id="current-user">Signed in as: <strong>test test</strong></span>
+        <button id="lobbyButton" onclick="location.href='lobby.html'">Quit</button>
+    </nav>
     <img id="title" src="img/title.png">
     <div id="playerStatsSidebar">
         <div id="player1Stats">
             <p>Player X</p>
-            <p id="player1Wins">Wins: 0</p>
-            <p id="player1Losses">Losses: 0</p>
             <p id="player1WLRatio">W/L Ratio: N/A</p>
             <img id="redX" src="img/redX.png">
         </div>
         <div id="player2Stats">
             <p>Player O</p>
-            <p id="player2Wins">Wins: 0</p>
-            <p id="player2Losses">Losses: 0</p>
             <p id="player2WLRatio">W/L Ratio: N/A</p>
             <img id="blueO" src="img/blueO.png">
         </div>
@@ -33,10 +30,6 @@
     <!-- <button id="resetButton" onclick="resetGame()">Reset Game</button> -->
 
     <!-- placeholders -->
-    <div id="buttonBanner">
-        <button id="logoutButton">Logout</button>
-        <button id="lobbyButton" onclick="location.href='lobby.html'">Quit</button>
-    </div>
 
     <script src="js/client.js"></script>
 </body>

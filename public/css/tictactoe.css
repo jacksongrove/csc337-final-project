@@ -1,8 +1,40 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 50px;
+    margin: 0;
 }
+
+/* Navigation Bar */
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+#navbar #current-user {
+    margin-right: auto;
+    font-size: 14px;
+    color: #ccc;
+}
+
+#lobbyButton {
+    margin-top: 15px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #c80000;
+    color: #f0f0f0;
+    cursor: pointer;
+    margin-right: 5px;
+    display: inline-block;
+}
+#lobbyButton:hover {
+    background-color: #ac0000;
+}
+
+/* Game board styling */
 .board {
     margin-top: 50px;
     display: grid;
@@ -32,7 +64,7 @@ body {
     width:200px;
     height: 66.5vh;
     position: absolute;
-    top:0;
+    top: 70px;
     left:0;
     background:#d9d9d9;
 }
@@ -48,7 +80,7 @@ body {
     width:200px;
     height: 66.5vh;
     position: absolute;
-    top:0;
+    top: 70px;
     right:0;
     background:#d9d9d9;
     vertical-align: middle;
@@ -97,44 +129,13 @@ body {
     height: auto;
 }
 
-#resetButton {
-    margin: 20px;
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-}
-#resetButton:hover {
-    background-color: #45a049; /* Darker green on hover */
-}
-#lobbyButton {
-    margin-top: 15px;
-    padding: 5px 10px;
-    font-size: 14px;
-    background-color: #c80000;
-    color: #f0f0f0;
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-right: 5px;
-    display: inline-block;
-}
-#lobbyButton:hover {
-    background-color: #ac0000;
-}
 button {
     margin-top: 15px;
     padding: 5px 10px;
     font-size: 14px;
     background-color: #cccccc;
     color: #333333;
-    border: 1px solid #aaa;
+    border: 0px #aaa;
     border-radius: 3px;
     cursor: pointer;
     margin-right: 5px;
@@ -143,43 +144,3 @@ button {
 button:hover {
     background-color: #bbb;
 }
-#gameSelectDropdown {
-    margin-top: 15px;
-    padding: 5px 10px;
-    font-size: 14px;
-    background-color: #cccccc;
-    color: #333333;
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-right: 5px;
-    display: inline-block;
-}
-#buttonBanner {
-    width: 100vw;
-    background-color: #e7e7e7;
-    padding-bottom: 5.55vh;
-}
-
-#lb {
-    text-align: center;
-    margin-left: 42vw;
-}
-
-#pillar1 {
-    width: 200px;
-    height: auto;
-    float: left;
-}
-
-#pillar2 {
-    width: 200px;
-    height: auto;
-    float: right;
-}
-
-#leaderboard {
-    width: 100vw;
-    height: auto;
-}
-
