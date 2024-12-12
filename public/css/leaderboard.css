@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Navigation Bar */
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+#navbar #current-user {
+    margin-right: auto;
+    font-size: 14px;
+    color: #ccc;
+}
+
+#navbar button {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+/* Button hover colors */
+#lobbyButton:hover, #leaderboardButton:hover {
+    color: #007bff;
+    background-color: transparent;
+}
+#logoutButton:hover {
+    color: #e00000;
+}
+
+/* Leaderboard Header */
+#leaderboard {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 50%;
+    height: auto;
+}
+
+/* Leaderboard Styling */
+
+#lb th, #lb td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    color: #444;
+}
+
+#lb th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+}
+
+#lb {
+    margin: 20px auto;
+    width: 50vw;
+}
+
+#lb td {
+    background-color: #fff;
+}
+
+#lb tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Pillars */
+#pillar1, #pillar2 {
+    width: 200px;
+    height: auto;
+    float: left;
+    margin-top: 20px;
+}
+
+#pillar2 {
+    float: right;
+}
+
+#status {
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+#leaderboard {
+    width: 70vw;
+    height: auto;
+}
