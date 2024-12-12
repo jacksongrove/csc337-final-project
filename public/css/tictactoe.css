@@ -3,11 +3,13 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
-    background: linear-gradient(120deg, #76e3ea, #7873f5);
+    background: linear-gradient(120deg, #eae15d, #e13838, #fff,#fff,#fff,#fff, #99e0e5, #7873f5);
     color: #1c1c1c;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
+/* Navigation bar styling */
 #navbar button {
     font-size: 16px;
     margin-left: 10px;
@@ -37,16 +39,26 @@ body {
 #title {
     margin: 30px auto 20px auto;
     display: block;
-    width: 30%;
+    max-height: 12vh;
 }
 
 /* Player Stats Sidebar */
-#player1Stats, #player2Stats {
+#player1Stats {
     padding: 20px 10px;
-    width: 180px;
+    width: 15vw;
     position: absolute;
-    top: 150px;
-    background: rgba(255, 255, 255, 0.1);
+    top: 15vh;
+    background: linear-gradient(120deg, #eae15d, #e13838);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+#player2Stats {
+    padding: 20px 10px;
+    width: 15vw;
+    position: absolute;
+    top: 15vh;
+    background: linear-gradient(120deg, #99e0e5, #7873f5);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
@@ -73,49 +85,55 @@ body {
 }
 
 #redX, #blueO {
-    width: 80px; /* Reduced size */
+    width: 80px;
     margin-top: 10px;
 }
 
 /* Game Board Styling */
 .board {
-    margin: auto;
+    margin: 30px auto;
     display: grid;
-    grid-template-columns: repeat(3, 150px);
-    gap: 5px;
-    justify-content: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 50vmin;
+    height: 50vmin;
+    aspect-ratio: 1;
     position: relative;
-    z-index: 1;
+    background: transparent;
 }
 
+/* Hash Lines */
 .cell {
-    width: 150px;
-    height: 150px;
-    border: 3px solid #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 4rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
+.cell:nth-child(4), .cell:nth-child(5), .cell:nth-child(6) { /* middle row */
+    border-top: 3px solid black;
+}
+.cell:nth-child(7), .cell:nth-child(8), .cell:nth-child(9) { /* bottom row */
+    border-top: 3px solid black;
+}
+
+.cell:nth-child(2), .cell:nth-child(5), .cell:nth-child(8) { /* middle column */
+    border-left: 3px solid black;
+}
+.cell:nth-child(3), .cell:nth-child(6), .cell:nth-child(9) { /* right column */
+    border-left: 3px solid black;
+}
+
 .cell:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-}
-.cell.taken {
-    cursor: not-allowed;
-    background: rgba(255, 255, 255, 0.2);
+    background-color: #0000001a;
 }
 
 /* Game Status */
 #status {
     margin: 20px auto;
     font-size: 1.5rem;
-    color: #fff;
+    color: white;
     background: rgba(0, 0, 0, 0.3);
     padding: 10px 20px;
     border-radius: 5px;
@@ -124,7 +142,7 @@ body {
     z-index: 2;
 }
 
-/* Adjustments for Game Over */
+/* Game Over */
 #status.game-over {
     color: #ff6ec4;
     font-size: 2rem;
