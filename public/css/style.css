@@ -121,3 +121,10 @@ body {
     color: gray; /* Low contrast to keep it subtle */
     margin-left: 5px; /* Adds some space from the name */
 }
+
+/* Error Message */
+.error {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 20px;
+}
