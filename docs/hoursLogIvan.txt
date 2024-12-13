@@ -1,40 +1,23 @@
 11/21 - 2 hours programming prototype from templates
 11/21 - 6 hours planning and coordinating project and brainstorming
+    Total so far: 8 hours (0 + 8)
 11/24 - 1 hour sketching and brainstorming layout of pages and communication between
 11/24 - 1.5 hour implementing template pages and synchronizing game between two players
+    Total so far: 10.5 hours (8 + 2.5)
 11/29 - 0.5 hours researching Server-Side Events (and implementing a template)
 11/29 - 2 hour reorganizing and refactoring
 11/29 - 2 hours implementing https with secure login/signup with hashed passwords
 11/29 - 1 hour researching integrating mongodb into development environments
 11/29 - 0.5 hours reviewing code and documenting
+    Total so far: 16.5 hours (10.5 + 6)
 11/29-12/7 - ? hours occasionally fixing bugs and communicating with team TODO calculate hours
-11/8 - ? hours sign in authentication
-11/8 - ? hours challenge players feature
-11/8 - ? hours proper lobby implementation
-TODO: 
-    Implement leaderboards properly
-    Show the name of the two players during the game
-    Remove some alerts maybe (kinda annoying)
-    Keep client connected during page transitions
-    Allow for accept/decline buttons next to the challenge button (maybe multiple people challenge)
-    Make firefox hold off on displaying until all resources are loaded first
-    Maybe add icon using /favicon.ico
-    Make login/signup not show you a 200 or 400 status (automatically redirect to lobby.html)
-    Document a lot of code
-    Refactor some code since there is a lot of duplication
-    Modularize the code so less mistakes can happen and so mistakes can be spotted
-    Add logout button
-    Add obvious login/signup buttons when not logged in
-    Make errors more obvious (instead of telling the console that you are not authorized, tell the user in a popup or notification, or gray out the option)
-    Make code more resilient (prevent user from easily crashing it). If something catastrophic happens it's better to just catch the error and undo or reset whatever was affected
-    Style with CSS
-    Investigate faulty behavior with events (the client sometimes doesn't synchronize with server correctly)
-    Maybe implement passwords? (that can be much much later if we still want to)
-    Tell the user who is signed in at all times (at the top right or something) (we don't want to look at cookies to determine which account we are in)
-    If the game is still going then in the lobby there should also be a button to rejoin the game (or anywhere)
-    Make it so that the server ends the game if a player leaves the game intentionally or starts another game (losing connection is ok)
-    Make the configs for the server be on a file. So that the ip and port can be chosen in a config, as well as any other security details.
-    Challenging self is kinda buggy (requires a reload for some reason).
-    Have the challenge popup happen anywhere (maybe they are in a game, looking at the leaderboard, or in a different page but still online)
-    Following from the previous TODO, make the notification appear in situations where the user is loading into a different page
+11/8 - 3 hours sign in authentication
+11/8 - 2 hours challenge players feature
+11/8 - 5 hours proper lobby implementation
+    Total so far: 26.5 hours (16.5 + 10)
+11/10 - 1 hour docker setup and refactoring configs
+11/10 - 2 hours leader board implementation
+    Total so far: 29.5 hours (26.5 + 3)
+12/12 - 5 hours bug fixes and documentation
+    Total so far: 34.5 hours (29.5 + 5)
 
