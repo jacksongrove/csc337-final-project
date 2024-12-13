@@ -50,7 +50,10 @@ router.get('/state', async (req, res) => {
         res.status(200).json({
             gameState: game.board,
             currentPlayer: game.currentPlayer,
-            gameActive: game.gameActive});
+            gameActive: game.gameActive,
+            playerX: {name: await db.usernameToName(game.PlayerX), username: game.PlayerX},
+            playerO: {name: await db.usernameToName(game.PlayerO), username: game.PlayerO},
+        });
         console.log(`${req.url} resolved`);
         console.log(game.board, game.currentPlayer, game.gameActive);
     } catch (error) {

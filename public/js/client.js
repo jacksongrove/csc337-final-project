@@ -21,7 +21,7 @@ async function updateOnlineUsers() {
     }
 }
 
-function updateUI({ gameState, currentPlayer, gameActive }) {
+function updateUI({ gameState, currentPlayer, gameActive, playerX, playerO }) {
     // if there is no board then we cannot draw
     // if there is no gamestate we cannot draw
     if (board == undefined || gameState == undefined) {
@@ -41,6 +41,12 @@ function updateUI({ gameState, currentPlayer, gameActive }) {
         board.appendChild(div);
     });
     status.textContent = gameActive ? `Player ${currentPlayer}'s turn` : `Game over`;
+
+    document.getElementById('playerXname').textContent = playerX.name;
+    document.getElementById('playerXusername').textContent = playerX.username;
+    document.getElementById('playerOname').textContent = playerO.name;
+    document.getElementById('playerOusername').textContent = playerO.username;
+    
 }
 
 async function makeMove(index) {

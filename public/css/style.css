@@ -110,12 +110,12 @@ body {
     transform: scale(1.05);
 }
 
-#name {
+#name, .name {
     font-size: 1.2rem; /* Slightly larger font for prominence */
     font-weight: bold; /* Makes the name stand out */
 }
 
-#username {
+#username, .username {
     font-size: 0.9rem; /* Smaller than the name */
     font-weight: normal; /* Less prominent */
     color: gray; /* Low contrast to keep it subtle */

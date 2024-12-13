@@ -224,6 +224,16 @@ async function incrementLoss(username) {
     }
 }
 
+async function usernameToName(username) {
+    const account = await AccountModelDB.findOne({ username });
+    if (account) {
+        return account.name;
+    } else {
+        console.error(`Account with username ${username} not found.`);
+        return null;
+    }
+}
+
 
 // Exported methods
 module.exports = {
@@ -237,5 +247,6 @@ module.exports = {
     doesAccountExist,
     getAllAccounts,
     incrementWin,
-    incrementLoss
+    incrementLoss,
+    usernameToName
 };
