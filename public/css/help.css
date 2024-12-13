@@ -1,0 +1,8 @@
+.helpText {
+    width: 400pt;
+}
+
+.center {
+    max-width: fit-content;
+    margin-inline: auto;
+}

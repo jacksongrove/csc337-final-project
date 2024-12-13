@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+    <link id="cssFile" rel="stylesheet" type="text/css" href="css/help.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+    <nav id="navbar">
+        <button onclick="location.href='index.html'">Go back to index</button>
+    </nav>
+    <div class="center">
+        <p class="helpText">
+            To being using the Tic-Tac-Toe game you have to first be signed in. If you have already made an account you must <a href='login.html'>log in</a>. If you do not yet have an account you must <a href="signup.html">sign up</a>.
+        </p>
+        <p class="helpText">
+            If you are already logged in you will be automatically redirected to the <a href="lobby.html">lobby</a> if you try to <a href='login.html'>log in</a> or <a href="signup.html">sign up</a>. Any attempts to access the main pages will cause a redirect to the <a href='login.html'>log page</a>.
+        </p>
+        <p class="helpText">
+            In the <a href="lobby.html">lobby</a> you can challenge other players or accept challenges from other players. Any online player can be challenged including challenging yourself. If you challenge a player, the recipient player must accept for a game to begin. By default each player will have a "challenge" button next to them in the <a href="lobby.html">lobby</a>. Pressing the button will send a challenge notification to that player. The recipient will then have both a notification appear and two places to accept or decline, either in the notification itself or in the <a href="lobby.html">lobby</a> player next to the player who sent the challenge. The notification allows for challenges to be accepted while viewing any page while the <a href="lobby.html">lobby</a> buttons allow for accepting when multiple players send a request.
+        </p>
+        <p class="helpText">
+            The game page is not visible by default. The server must first begin a game and players will be placed in them if they both accept. In the game page player can play Tic-Tac-Toe by clicking on a square when it is their turn. Once there is a winner the scores for the player will be updated (winning against self does not count towards the <a href="leaderboard.html">leaderboard</a>). The game can be left by clicking on the "quit" button any time.
+        </p>
+        <p class="helpText">
+            The a <a href="leaderboard.html">leaderboard</a> page shows the scores of all players.
+        </p>
+        <p class="helpText">
+            You can log out by pressing the "log out" button. The browser will remain logged otherwise.
+        </p>
+        <p class="helpText">
+            WARNING: It is not recommended to sign in on multiple browsers. It is not recommended to use the same browser for multiple connections. This is because when two connections use the same login, one is overriden and is unable to listen for game events. This is intended behavior because if passwords were implemented, we would want to invalidate one of the sessions.
+        </p>
+    </div>
+    
+</body>
+</html>
