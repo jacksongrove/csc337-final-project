@@ -25,6 +25,8 @@ docker-compose down --volumes
 ```
 Additionally Ctrl-C can be used to bring down the container while keeping accounts or the provided tools from the Docker executable or IDE can be used instead to manage the containers.
 
+**Note**: **The [General Requirements](#General-Requirements) fulfillment are near the bottom before the [gallery](#Gallery)**
+
 ## Overview
 This project implements a network multiplayer Tic Tac Toe game. Users are able to log into the service an pick another user to play against. Users can play in real time. Each user account will store statistics vs another player and their overall wins:losses. The user can optionally play against themselves.
 
@@ -61,6 +63,10 @@ POST requests are handled most of the time when the player needs to send data. G
 
 Each player consists of a name and a username as well as additional information such as wins and losses. The team has ultimately decided we do not wish to continue supporting passwords so clients are expected to be honest when it comes to their username. However, if they do not provide a valid username the server will reject requests if an action requires permission.
 
+## Reflections
+
+The project itself went well. Scheduling did not work as time was extremely limited for many groupmates. The fluid approach with the expectation and planning to switch between roles and pick up where others left off helped with maintaining progress without slowdowns. The initial brainstorm and final product match very closely. While this isn't an indication of a good result, it is an indication of the organization going into the project. Most features were implemented. Some were added during the development cycle. While other features were scrapped because they were either replaced or deemed not to be important.
+
 ## Timeline
 
 The timeline was mostly followed and deadlines were purposefully set early to account for potential setbacks.
@@ -71,7 +77,27 @@ Hours may not have been accurately logged since they are mostly coming from Gith
 
 ![Timeline](docs/timeline.png)
 
-### Gallery:
+## General Requirements
+
+* The project is of significant scale and complexity. Although it may be a TicTacToe game. It covers the concepts covered in class and has a lot of moving components. The TicTacToe aspect is only a foundation or idea from which we can add features to. Since the TicTacToe game is multiplayer it automatically requires a lot of NodeJS and JavaScript code to facilitate communications between the server and client.
+
+* * Although not strictly tracked the time debugging, communicating, and writing the code likely surpassed 60 hours since over 40 hours can be counted from repository commits alone. (20 hours debugging and communicating may not have been tracked well).
+
+* The website allows for account creation. Specifically with a name and username. It is not expected to be secure and although we did look into passwords and implemented a working and secure version, it was not worth the support needed (since it isn't relevant to what we need to do and what we need to demonstrate).
+
+* The website allows interaction in various ways. For one, the players can see each other because it shows who is online. The players can also challenge each other and see the notifications in realtime. The TicTacToe game also gives realtime interaction. Server-Side Events were used instead of Websockets. There is a leaderboard which also counts as interaction between players.
+
+* Going into this project there is client-side JavaScript and NodeJS in the backend.
+
+* The server makes use of NodeJS, express, mongoDB, and mongoose. A few more modules were used, namely cookie-parser and dotenv but they are only auxiliary and can likely be replaced with an hour of work.
+
+* The database contains a lot of differing data. First there is the name and username it keeps track of. Next is the scores. Finally it has the gamestate and all of its associated values. Additionally, there is the ability to store player challenges themselves however we do not have a need for that so the database does not have to keep track of that.
+
+* The front-end uses HTML, CSS, and JS. No framework was used.
+
+* There is a <a href="public/help.html">help page</a> provided by the server. It explains a little bit about how to use the service. The button will be on the top-right (excluded when in a game to avoid leaving the other player mid-game). It's obvious in the sense that if someone is trying to click everything it's probably the first thing they will see and click on. It's not the main focus of the application so it was strategically placed to not draw focus but also be simple to spot when needed.
+
+## Gallery:
 
 Login page:
 ![Login screen](docs/loginPage.png)
