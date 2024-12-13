@@ -113,7 +113,6 @@ body {
 #name {
     font-size: 1.2rem; /* Slightly larger font for prominence */
     font-weight: bold; /* Makes the name stand out */
-    color: black; /* High contrast to ensure visibility */
 }
 
 #username {
