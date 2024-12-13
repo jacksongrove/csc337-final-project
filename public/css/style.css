@@ -34,17 +34,13 @@ body {
     cursor: pointer;
 }
 
-#leaderboardButton:hover {
+#leaderboardButton:hover, #lobbyButton:hover, #historyButton:hover, #helpButton:hover {
     background: linear-gradient(45deg, #76e3ea, #ff6ec4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; /* Makes text use gradient */
 }
 
-#lobbyButton:hover {
-    background: linear-gradient(45deg, #76e3ea, #ff6ec4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; /* Makes text use gradient */
-}
+
 
 #logoutButton:hover {
     color: #e00000;
