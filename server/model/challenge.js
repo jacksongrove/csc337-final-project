@@ -97,6 +97,21 @@ class Challenge {
     }
 
     /**
+     * Gets all challenged for a given challenger username.
+     * @param {string} challenger - The username of the challenger user.
+     * @returns {string[]} An array of usernames of challenged users.
+     */
+    static getChallengedOfChallenger(challenger) {
+        /** @type {string[]} */
+        let challengedUsernames = [];
+        Challenge.challengesInProgress.forEach(challenge => {
+            if (challenge.challenger == challenger)
+                challengedUsernames.push(challenge.challenged);
+        })
+        return challengedUsernames;
+    }
+
+    /**
      * Convert the challenger and challenged usernames into a key for Challenge.
      * @param {string} challenger - The username of the challenger.
      * @param {string} challenged - The username of the challenged user.

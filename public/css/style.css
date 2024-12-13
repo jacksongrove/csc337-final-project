@@ -51,7 +51,7 @@ body {
 }
 
 /* Challenge button */
-#challengeButton {
+.challengeButton {
     padding: 5px 10px;
     font-size: 14px;
     background: linear-gradient(45deg, #76e3ea, #ff6ec4);
@@ -62,8 +62,20 @@ body {
     transition: background-color 0.3s ease;
 }
 
-#challengeButton:hover {
+.challengeButton:hover {
     background: linear-gradient(45deg, #0161c8, #f06cbc);
+}
+
+.challengeButtonUnavailable {
+    padding: 5px 10px;
+    font-size: 14px;
+    background: linear-gradient(45deg, #d0d0d0, #e0e0e0); /* Lighter color to indicate unavailability */
+    color: #a0a0a0; /* Lighter text color */
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+    transition: none; /* Remove hover effect */
+    opacity: 0.6; /* Make it appear faded */
 }
 
 /* Challenge Notifications */

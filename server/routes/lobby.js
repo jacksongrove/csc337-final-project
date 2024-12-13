@@ -58,7 +58,7 @@ router.post('/challenge', async (req, res) => {
     }
 });
 
-router.post('/hasChallenge', async (req, res) => {
+router.get('/challengesReceived', async (req, res) => {
     try {
         const {} = req.body;
 
@@ -79,10 +79,38 @@ router.post('/hasChallenge', async (req, res) => {
         
 
         // Check to see if we have any challenges for the request
-        const challengersOfChallenged = Challenge.getChallengersOfChallenged(challengedUsername);
+        const challengesReceived = Challenge.getChallengersOfChallenged(challengedUsername);
 
         // we always respond with a list. It's empty if there are none.
-        res.status(200).json({ challengersOfChallenged });
+        res.status(200).json({ challengesReceived });
+    } catch (error) {
+        console.error('Error handling challenge request:', error);
+        res.status(500).json({ message: 'An error occurred.' });
+    }
+});
+
+router.get('/challengesMade', async (req, res) => {
+    try {
+        const {} = req.body;
+
+        // Check cookies and auth
+        const challengerUsername = getUsername(req);
+        if (!challengerUsername) {
+            return res.status(401).json({ message: 'Cannot ask for challenges without an auth cookie.' });
+        }
+
+        // Check if the challenger account exists (something went super wrong if so)
+        const selfAccountExists = await doesAccountExist(challengerUsername, res);
+        
+        if (!selfAccountExists) {
+            return res.status(404).json({ message: 'The user does not exist.' });
+        }
+
+        // Check to see if we have any challenges for the request
+        const challengesMade = Challenge.getChallengedOfChallenger(challengerUsername);
+
+        // we always respond with a list. It's empty if there are none.
+        res.status(200).json({ challengesMade });
     } catch (error) {
         console.error('Error handling challenge request:', error);
         res.status(500).json({ message: 'An error occurred.' });

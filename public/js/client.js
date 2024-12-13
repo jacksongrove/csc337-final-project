@@ -7,17 +7,29 @@ async function fetchGameState() {
 }
 
 async function updateOnlineUsers() {
-    const response = await fetch('/lobby/onlineUsers', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        // body: JSON.stringify({ index })
-    });
-    if (response.ok) {
-        const data = await response.json();
-        loadLobby(data.allOnlineUsers);
-    } else {
-        const data = await response.json();
-        console.error(`Could not load online users: ${data.message}`);
+    try {
+        // Make the three fetch requests concurrently using Promise.all
+        const [hasChallengeResponse, challengesMadeResponse, onlineUsersResponse] = await Promise.all([
+            fetch('/lobby/challengesReceived', { method: 'GET', headers: { 'Content-Type': 'application/json' } }),
+            fetch('/lobby/challengesMade', { method: 'GET', headers: { 'Content-Type': 'application/json' } }),
+            fetch('/lobby/onlineUsers', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+        ]);
+
+        // Check if all responses are ok, else handle errors
+        const [hasChallengeData, challengesMadeData, onlineUsersData] = await Promise.all([
+            hasChallengeResponse.ok ? hasChallengeResponse.json() : Promise.reject('Error fetching challenges you received'),
+            challengesMadeResponse.ok ? challengesMadeResponse.json() : Promise.reject('Error fetching challenges you made'),
+            onlineUsersResponse.ok ? onlineUsersResponse.json() : Promise.reject('Error fetching online users')
+        ]);
+
+        // Pass all the data into loadLobby
+        loadLobby({
+            allOnlineUsers: onlineUsersData.allOnlineUsers,
+            challengesReceived: hasChallengeData.challengesReceived,
+            challengesMade: challengesMadeData.challengesMade
+        });
+    } catch (error) {
+        console.error('Error updating online users or challenges:', error);
     }
 }
 
@@ -79,22 +91,23 @@ async function makeMove(index) {
     }
 }
 
-// Simulate challengePlayer function
-function challengePlayer(username) {
+async function challengePlayer(username) {
     console.log(`Challenged ${username}`);
     // Make a POST request to send a challenge
-    fetch('/lobby/challenge', {
+    await fetch('/lobby/challenge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ challengedUsername: username })
     }).then(response => response.json())
       .then(data => console.log(data))
       .catch(err => console.error(err));
+
+    updateOnlineUsers();
 }
 
 // TODO
 function challengePlayerCancelled(challenger, challenged){
-    fetch('/lobby/challengeCancel', {
+    fetch('/lobby/challengeDecline', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
@@ -126,15 +139,7 @@ function showNotification(challenger, challenged) {
         // the server will handle telling the other player to connect to the
         // same gameid
 
-        console.log(`Challenge accepted between ${challenger} and ${challenged}`);
-        // Make a POST request to send a challenge
-        fetch('/lobby/challengeAccept', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
-        }).then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.error(err));
+        acceptChallenge(challenger, challenged);
 
     };
 
@@ -143,29 +148,44 @@ function showNotification(challenger, challenged) {
         notification.style.display = 'none';
         // TODO tell the server the game is cancelled, do nothing further.
         // the server will handle telling the other player that it was declined.
-        console.log(`Challenge declined between ${challenger} and ${challenged}`);
-        // Make a POST request to send a challenge
-        fetch('/lobby/challengeDecline', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
-        }).then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.error(err));
+        declineChallenge(challenger, challenged);
     };
+}
+
+function acceptChallenge(challenger, challenged) {
+    console.log(`Challenge accepted between ${challenger} and ${challenged}`);
+    // Make a POST request to send a challenge
+    fetch('/lobby/challengeAccept', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
+    }).then(response => response.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+}
+
+function declineChallenge(challenger, challenged) {
+    console.log(`Challenge declined between ${challenger} and ${challenged}`);
+    // Make a POST request to send a challenge
+    fetch('/lobby/challengeDecline', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
+    }).then(response => response.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
 }
 
 // TODO
 function closeNotification(){
-    console.error("not implemented");
+    // make sure we hide it
+    const notification = document.getElementById('notification');
+    notification.style.display = 'none';
 }
+function loadLobby({ allOnlineUsers, challengesReceived, challengesMade }){
 
-function loadLobby(players){
-    // Example list of players
-    // const players = [
-    //     { name: 'Alice', username: 'alice123' },
-    //     { name: 'Bob', username: 'bob456' },
-    // ];
+    // get our player
+    const ourUsername = getCookie("authToken");
 
     // Reference to the players div
     const playersDiv = document.getElementById('players');
@@ -179,21 +199,35 @@ function loadLobby(players){
     playersDiv.innerHTML = '';
 
     // Load players dynamically
-    players.forEach(player => {
+    allOnlineUsers.forEach(otherPlayer => {
+        // if there is a challenger for then attach buttons
+        let acceptDeclineButtons = "";
+        if (challengesReceived.includes(otherPlayer.username)) {
+            acceptDeclineButtons = `
+            <button class="acceptBtn" onclick="acceptChallenge('${otherPlayer.username}', '${ourUsername}');">Accept</button>
+            <button class="declineBtn" onclick="declineChallenge('${otherPlayer.username}', '${ourUsername}');">Decline</button>
+            `;
+        }
+
+        let sendChallengeButton = "";
+        if (challengesMade.includes(otherPlayer.username)) {
+            sendChallengeButton = `<button class="challengeButtonUnavailable">Challenge</button>`;
+        } else {
+            sendChallengeButton = `<button class="challengeButton" onclick="challengePlayer('${otherPlayer.username}')">Challenge</button>`;
+        }
+
         const playerDiv = document.createElement('div');
         playerDiv.className = 'player';
         playerDiv.innerHTML = `
             <div>
-                <strong>${player.name}</strong><br>
-                <small>${player.username}</small>
+                <strong>${otherPlayer.name}</strong><br>
+                <small>${otherPlayer.username}</small>
             </div>
-            <button id="challengeButton" onclick="challengePlayer('${player.username}')">Challenge</button>
+            ${acceptDeclineButtons}
+            ${sendChallengeButton}
         `;
         playersDiv.appendChild(playerDiv);
     });
-
-    // Simulate a challenge from another player after 2 seconds
-    // setTimeout(() => showNotification('Charlie'), 2000);
 }
 
 
@@ -217,23 +251,26 @@ function setupEvents() {
             case "challenge":
                 // Give notification that user was challenged
                 showNotification(data.challenger, data.challenged);
+                updateOnlineUsers();
                 break;
             case "challengeAccept":
                 // go to the game screen
                 window.location.href = "tictactoe.html";
                 closeNotification();
                 break;
-            case "challengeDeclined":
-                challengePlayerCancelled(data.challenger, data.challenged);
+            case "challengeDecline":
+                // challengePlayerCancelled(data.challenger, data.challenged);
                 closeNotification();
-                fetchIncomingChallenges(); // TODO TEMP ask if there are others 
+                fetchIncomingChallenges(); // TODO TEMP ask if there are others
+                updateOnlineUsers();
                 break;
             case "gameState":
                 // Update the GameState UI
                 fetchGameState();
                 break;
             case "lobbyUpdate":
-                loadLobby(data.allOnlineUsers);
+                // loadLobby(data.allOnlineUsers);
+                updateOnlineUsers();
             default:
                 break;
         }
@@ -344,8 +381,8 @@ async function loadLeaderboard() {
 
 function fetchIncomingChallenges() {
     // Ask the server if we have any challenges waiting for us
-    fetch('lobby/hasChallenge', {
-        method: 'POST',
+    fetch('lobby/challengesReceived', {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
@@ -357,14 +394,14 @@ function fetchIncomingChallenges() {
         return response.json();
     })
     .then(data => {
-        const challengersOfChallenged = data.challengersOfChallenged || [];
+        const challengesReceived = data.challengesReceived || [];
         
         // Handle the challengers here
-        if (challengersOfChallenged.length > 0) {
-            console.log('Challenges waiting:', challengersOfChallenged);
+        if (challengesReceived.length > 0) {
+            console.log('Challenges waiting:', challengesReceived);
 
             // Example: Notify user of challenges
-            challengersOfChallenged.forEach(challenger => {
+            challengesReceived.forEach(challenger => {
                 showNotification(challenger);
             });
         }
