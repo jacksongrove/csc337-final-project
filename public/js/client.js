@@ -240,14 +240,46 @@ function updateUsername() {
     const username = getCookie('authToken');
     const name = getCookie('name');
 
-    // Update UI with username
-    if (document.getElementById('username') != undefined) {
-        document.getElementById('username').textContent = username;
+    // in the rare case this gets deleted we want to retrieve it again
+    if (name == undefined) {
+        // do it sometime in the future. It's fine if the user doesn't see it
+        // right away. It's fine if we don't have it right away.
+        fetchCookies(username).then( () => {
+            // Update UI with username
+            if (document.getElementById('username') != undefined) {
+                document.getElementById('username').textContent = username;
+            }
+            if (document.getElementById('name') != undefined) {
+                document.getElementById('name').textContent = name;
+            }  
+        }).catch(err => {
+            console.error("Error while fetching cookies" + err);
+        });
+    } else {
+        // Update UI with username
+        if (document.getElementById('username') != undefined) {
+            document.getElementById('username').textContent = username;
+        }
+        if (document.getElementById('name') != undefined) {
+            document.getElementById('name').textContent = name;
+        }  
     }
-    if (document.getElementById('name') != undefined) {
-        document.getElementById('name').textContent = name;
-    }       
 }
+
+async function fetchCookies(username){
+    return fetch('/auth/refreshCookie', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+    }).then(response => response.json())
+    .then(data => {
+        console.log(data);
+        return data;
+    })
+    .catch(err => {
+        throw err;
+    });
+} 
 
 
 function getCookie(name) {

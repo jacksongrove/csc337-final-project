@@ -79,5 +79,31 @@ router.post('/logout', (req, res) => {
     }
 });
 
+// POST /getname
+router.post('/refreshCookie', async (req, res) => {
+    try {
+        const { username } = req.body;
+
+        // Validate input
+        if (!username) {
+            return res.status(400).json({ message: 'Username is required.' });
+        }
+        
+        // try loading account
+        let loadedAccountResult = await db.loadAccount(username);
+        if (loadedAccountResult == null) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        res.cookie('authToken', username, { httpOnly: false});
+        res.cookie('name', loadedAccountResult.name, { httpOnly: false});
+
+        res.status(200).json({ message: 'Cookie retrieved successfully.' });
+    } catch (error) {
+        console.error('Error handling refresh cookie request:', error);
+        res.status(500).json({ message: 'An error occurred during cookie refresh.' });
+    }
+});
+
 
 module.exports = router;
