@@ -10,7 +10,7 @@
 11/29 - 1 hour researching integrating mongodb into development environments
 11/29 - 0.5 hours reviewing code and documenting
     Total so far: 16.5 hours (10.5 + 6)
-11/29-12/7 - ? hours occasionally fixing bugs and communicating with team TODO calculate hours
+11/29-12/7 - ? hours occasionally fixing bugs and communicating with team TODO calculate hours (could be 5-10 hours?)
 11/8 - 3 hours sign in authentication
 11/8 - 2 hours challenge players feature
 11/8 - 5 hours proper lobby implementation
