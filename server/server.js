@@ -1,5 +1,6 @@
 const express = require("express");
 const cookies = require("cookie-parser");
+const favicon = require('serve-favicon');
 const path = require("path");
 
 // force the directory to be correct no matter where it is located
@@ -62,8 +63,14 @@ app.get('/leaderboard.html', checkAuth, (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'leaderboard.html'));
 });
 
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/img', 'favicon.ico'));
+});
+
 // Serve static files except protected HTML
 app.use(express.static(path.join(__dirname, '../public')));
+
+
 
 // Middleware to check authentication
 function checkAuth(req, res, next) {
