@@ -70,8 +70,6 @@ app.get('/favicon.ico', (req, res) => {
 // Serve static files except protected HTML
 app.use(express.static(path.join(__dirname, '../public')));
 
-
-
 // Middleware to check authentication
 function checkAuth(req, res, next) {
     try {

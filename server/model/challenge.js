@@ -47,8 +47,6 @@ class Challenge {
      * @type {Map<string, Challenge>} Tracks challenges in progress using their key.
      */
     static challengesInProgress = new Map();
-    
-    
 
     /**
      * Checks if a challenge exists between two users.
