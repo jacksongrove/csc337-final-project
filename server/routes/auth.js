@@ -13,6 +13,14 @@ router.post('/signup', async (req, res) => {
         if (!name || !username) {
             return res.status(400).json({ message: 'Name and Username is required.' });
         }
+
+        if (name.length > 100) {
+            return res.status(400).json({ message: 'Name too long.' });
+        }
+
+        if (username.length > 100) {
+            return res.status(400).json({ message: 'Username too long.' });
+        }
     
         // Check if user already exists
         // try loading account
@@ -46,6 +54,10 @@ router.post('/login', async (req, res) => {
         // Validate input
         if (!username) {
             return res.status(400).json({ message: 'Username is required.' });
+        }
+
+        if (username.length > 100) {
+            return res.status(400).json({ message: 'Username too long.' });
         }
         
         // try loading account
