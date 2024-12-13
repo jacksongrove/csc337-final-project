@@ -6,11 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # Expose Node.js app on port 3000
+      - "${PORT}:${PORT}" # Expose Node.js app on port (3000 default)
     depends_on:
       - mongodb
     environment:
       - MONGO_URL=mongodb://mongodb:27017/my_db_name # Internal MongoDB connection string
+    env_file:
+      - .env
     networks:
       - app-network
 

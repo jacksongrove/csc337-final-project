@@ -10,8 +10,12 @@ COPY . /app
 # Install dependencies
 RUN npm install
 
-# Expose the app port (change 3000 if your app uses a different port)
-EXPOSE 3000
+# Use environment variable for the exposed port
+ARG PORT
+ENV PORT=${PORT}
+
+# Dynamically expose the port specified in the environment (default 3000)
+EXPOSE ${PORT}
 
 # Command to start the app
 CMD ["node", "server/server.js"]
