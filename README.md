@@ -51,7 +51,7 @@ This project implements a network multiplayer Tic Tac Toe game. Users are able t
     WARNING: It is not recommended to sign in on multiple browsers. It is not recommended to use the same browser for multiple connections. This is because when two connections use the same login, one is overriden and is unable to listen for game events. This is intended behavior because if passwords were implemented, we would want to invalidate one of the sessions.
 </p>
 
-The [gallery](#gallery) is at the bottom of the README (this document) with images of various pages and situations as well as an early diagram drawn of what the project should look like in the brainstorming stage.
+The [gallery](#Gallery) is at the bottom of the README (this document) with images of various pages and situations as well as an early diagram drawn of what the project should look like in the brainstorming stage.
 
 ## Backend
 
@@ -71,7 +71,7 @@ Hours may not have been accurately logged since they are mostly coming from Gith
 
 ![Timeline](docs/timeline.png)
 
-### Image gallery: {#gallery}
+### Gallery:
 
 Login page:
 ![Login screen](docs/loginPage.png)
