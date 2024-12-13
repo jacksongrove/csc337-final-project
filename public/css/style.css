@@ -91,7 +91,7 @@ body {
 }
 
 /* Accept challenge button */
-#acceptBtn {
+#acceptBtn, .acceptBtn {
     padding: 5px 10px;
     font-size: 14px;
     background: linear-gradient(45deg, #76e3ea, #ff6ec4);
@@ -101,13 +101,13 @@ body {
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
 }
-#acceptBtn:hover {
+#acceptBtn:hover, .acceptBtn:hover {
     background: linear-gradient(45deg, #0161c8, #f06cbc);
     transform: scale(1.05);
 }
 
 /* Decline challenge button */
-#declineBtn {
+#declineBtn, .declineBtn {
     padding: 5px 10px;
     font-size: 14px;
     background-color: #e60000;
@@ -117,7 +117,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-#declineBtn:hover {
+#declineBtn:hover, .declineBtn:hover {
     background-color: #b60e0e;
     transform: scale(1.05);
 }
