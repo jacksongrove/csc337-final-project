@@ -52,8 +52,11 @@ function updateUI({ gameState, currentPlayer, gameActive, playerX, playerO, winn
 
     document.getElementById('playerXname').textContent = playerX.name;
     document.getElementById('playerXusername').textContent = playerX.username;
+    document.getElementById('playerXWLRatio').textContent = `${playerX.wins}/${playerX.losses}`;
     document.getElementById('playerOname').textContent = playerO.name;
     document.getElementById('playerOusername').textContent = playerO.username;
+    document.getElementById('playerOWLRatio').textContent = `${playerO.wins}/${playerO.losses}`;
+    
     
 }
 

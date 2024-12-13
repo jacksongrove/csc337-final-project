@@ -234,6 +234,15 @@ async function usernameToName(username) {
     }
 }
 
+function convertToPublicAccountView(account) {
+    return {
+        name: account.name,
+        username: account.username,
+        wins: account.wins,
+        losses: account.losses,
+    };
+}
+
 
 // Exported methods
 module.exports = {
@@ -248,5 +257,6 @@ module.exports = {
     getAllAccounts,
     incrementWin,
     incrementLoss,
-    usernameToName
+    usernameToName,
+    convertToPublicAccountView
 };

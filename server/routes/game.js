@@ -50,13 +50,16 @@ router.get('/state', async (req, res) => {
         }
 
         const winner = game.getWinner();
+
+        const playerXAccountPublic = db.convertToPublicAccountView(await db.loadAccount(game.PlayerX));
+        const playerOAccountPublic = db.convertToPublicAccountView(await db.loadAccount(game.PlayerO));
         
         res.status(200).json({
             gameState: game.board,
             currentPlayer: game.currentPlayer,
             gameActive: game.gameActive,
-            playerX: {name: await db.usernameToName(game.PlayerX), username: game.PlayerX},
-            playerO: {name: await db.usernameToName(game.PlayerO), username: game.PlayerO},
+            playerX: playerXAccountPublic,
+            playerO: playerOAccountPublic,
             winner: winner,
         });
         console.log(`${req.url} resolved`);
