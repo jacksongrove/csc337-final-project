@@ -8,7 +8,7 @@
     <link id="cssFile" rel="stylesheet" type="text/css" href="css/leaderboard.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
-<body onload="javascript:loadLeaderboard()">
+<body onload="javascript:loadHistory()">
     <nav id="navbar">
         <button onclick="location.href='help.html'">Help page</button>
         <span id="current-user">Signed in as: <span id="name"></span> <span id="username"></span></span>
@@ -17,23 +17,12 @@
         <button id="historyButton" onclick="location.href='history.html'">History</button>
         <button id="logoutButton">Logout</button>
     </nav>
-    <img src="img/leaderboard.png" id="leaderboard">
+    <h1>History</h1>
     <img src="img/pillar.png" id="pillar1">
     <img src="img/pillar.png" id="pillar2">
     
-    <!-- Table of players, replace with buttons -->
-    <table id="lb">
-        <tr>
-            <th scope="col">Player Name</th>
-            <th scope="col"> Win:Loss</th>
-        </tr>
-        <!-- Rows will be populated dynamically -->
-    </table>
-
-    <div id="notification">
-        <p id="challengeMessage"></p>
-        <button id="acceptBtn">Accept</button>
-        <button id="declineBtn">Decline</button>
+    <div id="history" class="codeblock">
+        <!-- History content will be dynamically added here -->
     </div>
 
     <script src="js/client.js"></script>

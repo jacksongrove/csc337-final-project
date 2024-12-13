@@ -411,6 +411,38 @@ function fetchIncomingChallenges() {
     });
 }
 
+/**
+ * Fetches game history from the server and displays it in the element with id="history".
+ */
+async function loadHistory() {
+    try {
+        // Fetch data from the /history endpoint
+        const response = await fetch('/history');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch history: ${response.statusText}`);
+        }
+
+        // Parse the response as JSON
+        const data = await response.json();
+
+        // Ensure the response contains a "game" key with a list of strings
+        if (!Array.isArray(data.games)) {
+            throw new Error("Invalid data format: 'game' should be a list of strings.");
+        }
+
+        // Find the history element
+        const historyElement = document.getElementById('history');
+        if (!historyElement) {
+            throw new Error('Element with id="history" not found.');
+        }
+
+        // Write the games as a block of text
+        historyElement.textContent = data.games.join('\n\n');
+    } catch (error) {
+        console.error('Error loading game history:', error.message);
+    }
+}
+
 /// START OF STATEMENTS
 
 const board = document.getElementById('board');

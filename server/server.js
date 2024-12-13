@@ -27,6 +27,7 @@ const authRoutes = require('./routes/auth');
 const lobbyRoutes = require('./routes/lobby');
 const eventRoutes = require('./routes/event');
 const leaderboardRoutes = require('./routes/leaderboard');
+const historyRoutes = require('./routes/history');
 
 const db = require('./db/db');
 
@@ -37,6 +38,7 @@ app.use('/auth', authRoutes);
 app.use('/lobby', checkAuth, lobbyRoutes);
 app.use('/event', checkAuth, eventRoutes);
 app.use('/leaderboard', checkAuth, leaderboardRoutes);
+app.use('/history', checkAuth, historyRoutes);
 
 // Route to serve login.html
 app.get('/signup.html', skipLogin, (req, res) => {
@@ -61,6 +63,11 @@ app.get('/game.html', checkAuth, (req, res) => {
 // Route to serve leaderboard.html
 app.get('/leaderboard.html', checkAuth, (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'leaderboard.html'));
+});
+
+// Route to serve history.html
+app.get('/history.html', checkAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', 'history.html'));
 });
 
 app.get('/favicon.ico', (req, res) => {

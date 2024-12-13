@@ -124,10 +124,11 @@ router.post('/move', async (req, res) => {
                 db.incrementWin(winnerUsername);
                 db.incrementLoss(loserUsername);
             }
+
+            // store to db
+            await db.storeGameState(game);
         }
         
-
-        // TODO possibly remove
         if (game.getWinner() || game.isDraw()) {
             console.log(`Game "${game.PlayerX}-${game.PlayerO}" ended`);
             return res.status(200).json({ 

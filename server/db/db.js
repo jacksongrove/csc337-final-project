@@ -6,7 +6,7 @@
 const config = require('../config');
 const mongoose = require('mongoose');
 const account = require('../model/account');
-const gameState = require('../model/gameState');
+const GameState = require('../model/gameState');
 const crypto = require('crypto'); // for hashing games easily
 
 /**
@@ -70,7 +70,7 @@ async function connectToDb(mongoUrl) {
 /**
  * Stores an account in the database.
  * @param {Object} accountObj - The account object to store.
- * @returns {Promise<Object|null>} The saved account or null on error.
+ * @returns {Promise<account.Account|null>} The saved account or null on error.
  */
 async function storeAccount(accountObj) {
     try {
@@ -90,7 +90,7 @@ async function storeAccount(accountObj) {
 /**
  * Retrieves an account by username.
  * @param {string} username - The username of the account to retrieve.
- * @returns {Promise<Object|null>} The account object or null if not found.
+ * @returns {Promise<account.Account|null>} The account object or null if not found.
  */
 async function loadAccount(username) {
     try {
@@ -108,7 +108,7 @@ async function loadAccount(username) {
 
 /**
  * Stores a game state in the database.
- * @param {Object} gameStateObj - The game state object to store.
+ * @param {GameState} gameStateObj - The game state object to store.
  * @returns {Promise<string|null>} The hash of the saved game state or null on error.
  */
 async function storeGameState(gameStateObj) {
@@ -127,7 +127,7 @@ async function storeGameState(gameStateObj) {
 /**
  * Retrieves a game state by hash.
  * @param {string} gameStateHash - The hash of the game state to retrieve.
- * @returns {Promise<Object|null>} The game state object or null if not found.
+ * @returns {Promise<GameState|null>} The game state object or null if not found.
  */
 async function loadGameState(gameStateHash) {
     try {
@@ -147,12 +147,12 @@ async function loadGameState(gameStateHash) {
 /**
  * Converts a Mongoose GameState document to a GameState object.
  * @param {Object} gameStateMongoose - The GameState Mongoose document.
- * @returns {Object} The GameState object.
+ * @returns {GameState} The GameState object.
  * @throws {Error} On conversion failure.
  */
 function _gameStateMongooseToObject(gameStateMongoose) {
     try {
-        return new gameState.GameState(gameStateMongoose.PlayerX, gameStateMongoose.PlayerO,
+        return new GameState.GameState(gameStateMongoose.PlayerX, gameStateMongoose.PlayerO,
             gameStateMongoose.playerX,
             gameStateMongoose.playerO,
             gameStateMongoose.board,
@@ -168,21 +168,21 @@ function _gameStateMongooseToObject(gameStateMongoose) {
 
 /**
  * Converts a GameState object into a Mongoose GameState document for storing.
- * @param {Object} gameStateObj - The GameState object.
+ * @param {GameState} gameStateObj - The GameState object.
  * @returns {Object} The GameState Mongoose document.
  */
 function _gameStateObjectToMongoose(gameStateObj) {
     try {
         return new GameModelDB({
-            PlayerX: gameStateObj.PlayerX,
-            PlayerO: gameStateObj.PlayerO,
-            Board: gameStateObj.board,
-            CurrentPlayer: gameStateObj.currentPlayer,
-            GameActive: gameStateObj.gameActive,
+            playerX: gameStateObj.PlayerX,
+            playerO: gameStateObj.PlayerO,
+            board: gameStateObj.board,
+            currentPlayer: gameStateObj.currentPlayer,
+            gameActive: gameStateObj.gameActive,
             // Winner: gameStateObj.Winner,
             // Time: gameStateObj.Time,
-            Moves: gameStateObj.moves,
-            Hash: _generateGameStateHash(gameStateObj)
+            moves: gameStateObj.moves,
+            hash: _generateGameStateHash(gameStateObj)
         });
     } catch (error) {
         console.error("Error converting GameState to Game document:", error.message);
@@ -195,7 +195,7 @@ function _gameStateObjectToMongoose(gameStateObj) {
  * This is used when loading data from the database for application use.
  * 
  * @param {Object} accountMongoose - The Mongoose Account document.
- * @returns {Object} The plain JavaScript account object.
+ * @returns {account.Account} The plain JavaScript account object.
  * @throws {Error} If the conversion fails.
  */
 function _accountMongooseToObject(accountMongoose) {
@@ -212,7 +212,7 @@ function _accountMongooseToObject(accountMongoose) {
  * Converts a plain JavaScript Account object to a Mongoose Account document.
  * This is used when storing account data into the database.
  * 
- * @param {Object} accountObj - The plain JavaScript account object.
+ * @param {account.Account} accountObj - The plain JavaScript account object.
  * @returns {Object} The Mongoose Account document.
  * @throws {Error} If the conversion fails.
  */
@@ -264,7 +264,7 @@ async function doesAccountExist(username) {
 /**
  * Retrieves all accounts from the database.
  * 
- * @returns {Promise<Object[]>} An array of account objects.
+ * @returns {Promise<account.Account[]>} An array of account objects.
  */
 async function getAllAccounts() {
     const accountsMongoose = await AccountModelDB.find();
@@ -277,10 +277,29 @@ async function getAllAccounts() {
 }
 
 /**
+ * Retrieves all gamestates from the database.
+ * 
+ * @returns {Promise<GameState[]>} An array of gametate objects.
+ */
+async function getAllGameStates() {
+    const gameStatesMongoose = await GameModelDB.find();
+    const gameStateObjects = [];
+    gameStatesMongoose.forEach(gameStateMongoose => {
+        gameStateObjects.push(new GameState(
+            gameStateMongoose.playerX, gameStateMongoose.playerO,
+            gameStateMongoose.board, gameStateMongoose.currentPlayer,
+            gameStateMongoose.gameActive,
+            gameStateMongoose.moves,
+            gameStateMongoose.hash));
+    });
+    return gameStateObjects;
+}
+
+/**
  * Increments the win count for a specific account by username.
  * 
  * @param {string} username - The username of the account to update.
- * @returns {Promise<Object|null>} The updated account object or null if not found.
+ * @returns {Promise<account.Account|null>} The updated account object or null if not found.
  */
 async function incrementWin(username) {
     const account = await AccountModelDB.findOne({ username });
@@ -298,7 +317,7 @@ async function incrementWin(username) {
  * Increments the loss count for a specific account by username.
  * 
  * @param {string} username - The username of the account to update.
- * @returns {Promise<Object|null>} The updated account object or null if not found.
+ * @returns {Promise<account.Account|null>} The updated account object or null if not found.
  */
 async function incrementLoss(username) {
     const account = await AccountModelDB.findOne({ username });
@@ -332,8 +351,9 @@ async function usernameToName(username) {
  * Converts an account object to a public view representation.
  * This excludes sensitive or internal details of the account.
  * 
- * @param {Object} account - The account object to convert.
+ * @param {account.Account} account - The account object to convert.
  * @returns {Object} The public view representation of the account.
+ * @property {name}
  */
 function convertToPublicAccountView(account) {
     return {
@@ -343,7 +363,6 @@ function convertToPublicAccountView(account) {
         losses: account.losses,
     };
 }
-
 
 // Exported methods
 module.exports = {
@@ -359,5 +378,6 @@ module.exports = {
     incrementWin,
     incrementLoss,
     usernameToName,
-    convertToPublicAccountView
+    convertToPublicAccountView,
+    getAllGameStates
 };

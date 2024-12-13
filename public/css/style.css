@@ -140,3 +140,14 @@ body {
     font-size: 14px;
     margin-top: 20px;
 }
+
+.codeblock {
+    white-space: pre-wrap;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-family: monospace;
+    overflow-x: auto;
+    max-height: 200px;
+    text-align: left;
+}

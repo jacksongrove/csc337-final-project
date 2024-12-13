@@ -192,6 +192,22 @@ class GameState {
             GameState.runningGames.delete(this.PlayerO);
         }
     };
+
+    /**
+     * Generates a string representation of the current GameState instance.
+     * 
+     * @returns {string} A formatted string containing details about the game state, 
+     * including players, board, current player, game status, and move history.
+     */
+    toString() {
+        return `GameState:
+Player X: ${this.PlayerX}
+Player O: ${this.PlayerO}
+Board: ${this.board.map(cell => cell || '-').join(' | ')}
+Current Player: ${this.currentPlayer}
+Game Active: ${this.gameActive}
+Moves: ${this.moves.join(', ')}`;
+    }
 }
 
 module.exports = GameState;
