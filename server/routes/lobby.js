@@ -22,7 +22,7 @@ router.post('/challenge', async (req, res) => {
         const { challengedUsername } = req.body;
 
         // Check cookies and auth
-        const challengerUsername = getChallengerUsername(req);
+        const challengerUsername = getUsername(req);
         if (!challengerUsername) {
             return res.status(401).json({ message: 'Cannot challenge without an auth cookie.' });
         }
@@ -32,17 +32,20 @@ router.post('/challenge', async (req, res) => {
 
         // Check if the challenger account exists (something went super wrong if so)
         const selfAccountExists = await doesAccountExist(challengerUsername, res);
-        if (!selfAccountExists) return;
 
         // Check if the challenged account exists
         const accountExists = await doesAccountExist(challengedUsername, res);
-        if (!accountExists) return;
+
+        if (!selfAccountExists || !accountExists) {
+            return res.status(404).json({ message: 'One or both users do not exist.' });
+        }
 
         // TODO, check if they are offline. If so then we also cannot challenge.
 
         // Check for duplicate challenges
-        if (Challenge.isDuplicateChallenge(challengerUsername, challengedUsername, res,
-            'Cannot challenge the same person twice.')) return;
+        if (Challenge.challengeExists(challengerUsername, challengedUsername)) {
+            return res.status(404).json({ message: 'Cannot challenge the same person twice.' });
+        }
 
         // Add challenge and notify user
         Challenge.addChallenge(challengerUsername, challengedUsername);
@@ -54,6 +57,38 @@ router.post('/challenge', async (req, res) => {
         res.status(500).json({ message: 'An error occurred.' });
     }
 });
+
+router.post('/hasChallenge', async (req, res) => {
+    try {
+        const {} = req.body;
+
+        // Check cookies and auth
+        const challengedUsername = getUsername(req);
+        if (!challengedUsername) {
+            return res.status(401).json({ message: 'Cannot ask for challenges without an auth cookie.' });
+        }
+
+        // Check if the challenger account exists (something went super wrong if so)
+        const selfAccountExists = await doesAccountExist(challengedUsername, res);
+        
+        if (!selfAccountExists) {
+            return res.status(404).json({ message: 'The user does not exist.' });
+        }
+
+        // TODO, check if they are offline. If so then we also cannot challenge.
+        
+
+        // Check to see if we have any challenges for the request
+        const challengersOfChallenged = Challenge.getChallengersOfChallenged(challengedUsername);
+
+        // we always respond with a list. It's empty if there are none.
+        res.status(200).json({ challengersOfChallenged });
+    } catch (error) {
+        console.error('Error handling challenge request:', error);
+        res.status(500).json({ message: 'An error occurred.' });
+    }
+});
+
 
 // TODO the functions below may requre a mutex if we run into concurrency issues
 // eg. One user accepting while another user is in the middle of declining.
@@ -70,7 +105,7 @@ router.post('/challengeAccept', async (req, res) => {
         const { challengerUsername } = req.body;
 
         // Check cookies and auth
-        const challengedUsername = getChallengerUsername(req);
+        const challengedUsername = getUsername(req);
         if (!challengedUsername) {
             return res.status(401).json({ message: 'Cannot accept challenge without an auth cookie.' });
         }
@@ -87,8 +122,9 @@ router.post('/challengeAccept', async (req, res) => {
         if (!accountExists) return;
 
         // Check if it even exists
-        if (!Challenge.challengeExists(challengerUsername, challengedUsername, res,
-            'Cannot accept a challenge that doesn\'t exist.')) return;
+        if (!Challenge.challengeExists(challengerUsername, challengedUsername)) {
+            return res.status(401).json({ message: 'Cannot decline a challenge that doesn\'t exist.' });
+        }
 
         // Remove the challenge and notify both users that it was accepted.
         Challenge.removeChallenge(challengerUsername, challengedUsername);
@@ -118,21 +154,10 @@ router.post('/challengeDecline', async (req, res) => {
         let { challengerUsername, challengedUsername } = req.body;
 
         // Check cookies and auth
-        const declinerUsername = getChallengerUsername(req);
+        const declinerUsername = getUsername(req);
         if (!declinerUsername) {
             return res.status(401).json({ message: 'Cannot decline challenge without an auth cookie.' });
         }
-
-        // Validate input
-        if (!validateUsername(challengerUsername, res)) return;
-
-        // Check if the challenger account exists (something went super wrong if so)
-        const selfAccountExists = await doesAccountExist(declinerUsername, res);
-        if (!selfAccountExists) return;
-
-        // Check if the challenged account exists
-        const accountExists = await doesAccountExist(challengerUsername, res);
-        if (!accountExists) return;
 
         if (challengedUsername == undefined) {
             // user did not send us a challenger, assume that the user themselves
@@ -140,22 +165,35 @@ router.post('/challengeDecline', async (req, res) => {
             challengedUsername = declinerUsername
         }
 
+        // Validate input
+        if (!validateUsername(challengerUsername, res)) return; // sets res 400
+
+        // Validate input
+        if (!validateUsername(challengedUsername, res)) return; // sets res 400
+
+        // Check if the challenger account exists (something went super wrong if so)
+        const challengedAccountExists = await doesAccountExist(challengedUsername, res);
+        if (!challengedAccountExists) return; // sets res 404
+
+        // Check if the challenged account exists
+        const challengerAccountExists = await doesAccountExist(challengerUsername, res);
+        if (!challengerAccountExists) return; // sets res 404
+
+        
+
         if (challengerUsername != declinerUsername && challengedUsername != declinerUsername) {
             // wait a minute, you can't decline a game if you aren't the sender or recepient.
             return res.status(401).json({ message: 'Cannot decline challenge if user is not a sender or recepient.' });
         }
 
         // Check if it even exists
-        if (!Challenge.challengeExists(challengerUsername, challengedUsername, res,
-            'Cannot decline a challenge that doesn\'t exist.')) return;
+        if (!Challenge.challengeExists(challengerUsername, challengedUsername)) {
+            return res.status(401).json({ message: 'Cannot decline a challenge that doesn\'t exist.' });
+        }
 
         // Remove the challenge and notify both users that it was declined
-        Challenge.removeChallenge(declinerUsername, challengedUsername);
+        Challenge.removeChallenge(challengerUsername, challengedUsername);
         notifyChallengeDeclineEvent(challengerUsername, challengedUsername);
-
-        // Create a game lobby for the players to join. When the players go into
-        // /tictactoe.html they will see their game automatically. Furthermore
-        // the client should automatically send them to the game.
 
         res.status(200).json({ message: 'Decline challenge sent successfully.' });
     } catch (error) {
@@ -164,7 +202,7 @@ router.post('/challengeDecline', async (req, res) => {
     }
 });
 
-function getChallengerUsername(req) {
+function getUsername(req) {
     if (!req.headers.cookie) return null;
     return req.cookies.authToken || null;
 }

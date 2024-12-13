@@ -74,10 +74,21 @@ function challengePlayer(username) {
 
 // TODO
 function challengePlayerCancelled(challenger, challenged){
-    console.error("not implemented");
+    fetch('/lobby/challengeCancel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ challengerUsername: challenger, challengedUsername: challenged })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to decline the challenge.');
+        }
+        return response.json();
+    })
+    .then(data => console.log('Challenge declined successfully:', data))
+    .catch(err => console.error('Error declining challenge:', err));
 }
 
-// Simulate receiving a challenge
 function showNotification(challenger, challenged) {
     const notification = document.getElementById('notification');
     const challengeMessage = document.getElementById('challengeMessage');
@@ -195,6 +206,7 @@ function setupEvents() {
             case "challengeDeclined":
                 challengePlayerCancelled(data.challenger, data.challenged);
                 closeNotification();
+                fetchIncomingChallenges(); // TODO TEMP ask if there are others 
                 break;
             case "gameState":
                 // Update the GameState UI
@@ -278,6 +290,38 @@ async function loadLeaderboard() {
     }
 }
 
+function fetchIncomingChallenges() {
+    // Ask the server if we have any challenges waiting for us
+    fetch('lobby/hasChallenge', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch challenges.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const challengersOfChallenged = data.challengersOfChallenged || [];
+        
+        // Handle the challengers here
+        if (challengersOfChallenged.length > 0) {
+            console.log('Challenges waiting:', challengersOfChallenged);
+
+            // Example: Notify user of challenges
+            challengersOfChallenged.forEach(challenger => {
+                showNotification(challenger);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching challenges:', error);
+    });
+}
+
 /// START OF STATEMENTS
 
 const board = document.getElementById('board');
@@ -297,8 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEvents();
     if (shouldShowUsername)
         updateUsername();
-    // ask server if we have any events waiting for us.
-    // TODO
+    fetchIncomingChallenges();
     
 }, false);
 
