@@ -24,6 +24,15 @@ router.get('/', async (req, res) => {
                 return 1; // b is prioritized
             }
 
+            // If one player has only losses while another doesn't then automatically
+            // put them lower
+            if (a.losses != 0 && b.losses == 0) {
+                return -1; // a is prioritized
+            }
+            if (b.losses != 0 && a.losses == 0) {
+                return 1; // b is prioritized
+            }
+
             // if there are no losses then sort by most wins
             if (a.losses == 0 && b.losses == 0) {
                 return a.wins - b.wins;
