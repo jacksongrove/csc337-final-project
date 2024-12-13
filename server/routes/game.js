@@ -44,15 +44,20 @@ router.get('/state', async (req, res) => {
         // get the game the player is in.
         // check if the game exists
         const game = GameState.runningGames.get(username);
+
         if (game == undefined) {
             return res.status(401).json({ message: 'Tried playing game when none exist.' });
         }
+
+        const winner = game.getWinner();
+        
         res.status(200).json({
             gameState: game.board,
             currentPlayer: game.currentPlayer,
             gameActive: game.gameActive,
             playerX: {name: await db.usernameToName(game.PlayerX), username: game.PlayerX},
             playerO: {name: await db.usernameToName(game.PlayerO), username: game.PlayerO},
+            winner: winner,
         });
         console.log(`${req.url} resolved`);
         console.log(game.board, game.currentPlayer, game.gameActive);

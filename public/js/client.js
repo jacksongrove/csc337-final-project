@@ -21,7 +21,9 @@ async function updateOnlineUsers() {
     }
 }
 
-function updateUI({ gameState, currentPlayer, gameActive, playerX, playerO }) {
+function updateUI({ gameState, currentPlayer, gameActive, playerX, playerO, winner }) {
+    const tictactoeStatusText = document.getElementById('status');
+
     // if there is no board then we cannot draw
     // if there is no gamestate we cannot draw
     if (board == undefined || gameState == undefined) {
@@ -40,7 +42,13 @@ function updateUI({ gameState, currentPlayer, gameActive, playerX, playerO }) {
         div.addEventListener('click', () => makeMove(index));
         board.appendChild(div);
     });
-    status.textContent = gameActive ? `Player ${currentPlayer}'s turn` : `Game over`;
+    if (winner) {
+        tictactoeStatusText.textContent = `${winner} has won!`;
+    } else if (!gameActive) {
+        tictactoeStatusText.textContent = `Draw!`;
+    } else {
+        tictactoeStatusText.textContent = `Player ${currentPlayer}'s turn`;
+    }
 
     document.getElementById('playerXname').textContent = playerX.name;
     document.getElementById('playerXusername').textContent = playerX.username;
