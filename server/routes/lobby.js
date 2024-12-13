@@ -122,6 +122,7 @@ router.get('/challengesMade', async (req, res) => {
 // eg. One user accepting while another user is in the middle of declining.
 // The server should only choose to process one at a time, not both.
 
+
 router.post('/challengeAccept', async (req, res) => {
     // Accept the challenge. If this happens before the decline then the game
     // will go through and begin.
@@ -157,6 +158,18 @@ router.post('/challengeAccept', async (req, res) => {
         // Remove the challenge and notify both users that it was accepted.
         Challenge.removeChallenge(challengerUsername, challengedUsername);
         notifyChallengeAcceptEvent(challengerUsername, challengedUsername);
+
+        // Decline all other challenges to this player
+        const challengersToDecline = Challenge.getChallengersOfChallenged(challengedUsername);
+        challengersToDecline.forEach(challengerToDecline => {
+            Challenge.removeChallenge(challengerToDecline, challengedUsername);
+        });
+
+        // Decline all other challenges this player made
+        const challengedsToDecline = Challenge.getChallengedOfChallenger(challengerUsername);
+        challengedsToDecline.forEach(challengedToDecline => {
+            Challenge.removeChallenge(challengerUsername, challengedToDecline);
+        });
 
         // build the game
         new GameState(challengerUsername, challengedUsername);
