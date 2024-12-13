@@ -152,7 +152,12 @@ router.post('/challengeAccept', async (req, res) => {
 
         // Check if it even exists
         if (!Challenge.challengeExists(challengerUsername, challengedUsername)) {
-            return res.status(401).json({ message: 'Cannot decline a challenge that doesn\'t exist.' });
+            return res.status(401).json({ message: 'Cannot accept a challenge that doesn\'t exist.' });
+        }
+
+        // Check if the user still exists (Can't start a game if the other user isn't online)
+        if (clients.getClient(challengerUsername) == undefined) {
+            return res.status(401).json({ message: 'Cannot accept a challenge if the other player is offline.' });
         }
 
         // Remove the challenge and notify both users that it was accepted.
