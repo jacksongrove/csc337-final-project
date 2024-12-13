@@ -123,6 +123,7 @@ router.post('/move', async (req, res) => {
                 message: game.getWinner() != null ? `Player ${winner} wins!` : 'It\'s a draw!', 
                 gameState: game.board });
         }
+        res.status(200).json({ message: 'Move made successfully.' });
     } catch (error) {
         console.error('Error handling move request:', error);
         res.status(500).json({ message: 'An error occurred.' });

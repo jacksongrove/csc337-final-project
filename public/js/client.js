@@ -51,8 +51,9 @@ async function makeMove(index) {
     });
     if (response.ok) {
         const data = await response.json();
-        updateUI(data);
-        if (data.message) alert(data.message);
+        // updateUI(data);
+        // The server will notify the player to update their board
+        console.log(`Successfully moved: ${data.message}`);
     } else {
         const data = await response.json();
         alert(`Invalid move: ${data.message}`);
