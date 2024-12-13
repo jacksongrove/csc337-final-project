@@ -212,18 +212,24 @@ router.post('/challengeDecline', async (req, res) => {
         }
 
         // Validate input
-        if (!validateUsername(challengerUsername, res)) return; // sets res 400
+        if (!validateUsername(challengerUsername, res))
+            return res.status(400).json({ message: 'Username invalid.' });
 
         // Validate input
-        if (!validateUsername(challengedUsername, res)) return; // sets res 400
+        if (!validateUsername(challengedUsername, res))
+            return res.status(400).json({ message: 'Username invalid.' });
 
         // Check if the challenger account exists (something went super wrong if so)
-        const challengedAccountExists = await doesAccountExist(challengedUsername, res);
-        if (!challengedAccountExists) return; // sets res 404
+        const challengedAccountExists = await doesAccountExist(challengedUsername);
+        if (!challengedAccountExists) {
+            return res.status(404).json({ message: 'Account does not exist.' });
+        }
 
         // Check if the challenged account exists
-        const challengerAccountExists = await doesAccountExist(challengerUsername, res);
-        if (!challengerAccountExists) return; // sets res 404
+        const challengerAccountExists = await doesAccountExist(challengerUsername);
+        if (!challengerAccountExists) {
+            return res.status(404).json({ message: 'Account does not exist.' });
+        } 
 
         
 
@@ -253,18 +259,16 @@ function getUsername(req) {
     return req.cookies.authToken || null;
 }
 
-function validateUsername(username, res) {
+function validateUsername(username) {
     if (!username) {
-        res.status(400).json({ message: 'Username is required.' });
         return false;
     }
     return true;
 }
 
-async function doesAccountExist(username, res) {
+async function doesAccountExist(username) {
     const account = await db.loadAccount(username);
     if (!account) {
-        res.status(404).json({ message: 'User not found.' });
         return false;
     }
     return true;

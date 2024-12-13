@@ -14,11 +14,13 @@ router.get('/', async (req, res) => {
         }
 
         // Validate input
-        if (!validateUsername(username, res)) return;
+        if (!validateUsername(username))
+            return res.status(400).json({ message: 'Username invalid.' });
 
         // Check if the challenged account exists (something went super wrong if so)
-        const selfAccountExists = await doesAccountExist(username, res);
-        if (!selfAccountExists) return;
+        const selfAccountExists = await doesAccountExist(username);
+        if (!selfAccountExists)
+            return res.status(404).json({ message: 'Account does not exist.' });
 
         /** @type {string[]} */
         const playerGames = [];
@@ -41,18 +43,16 @@ function getUsername(req) {
     return req.cookies.authToken || null;
 }
 
-function validateUsername(username, res) {
+function validateUsername(username) {
     if (!username) {
-        res.status(400).json({ message: 'Username is required.' });
         return false;
     }
     return true;
 }
 
-async function doesAccountExist(username, res) {
+async function doesAccountExist(username) {
     const account = await db.loadAccount(username);
     if (!account) {
-        res.status(404).json({ message: 'User not found.' });
         return false;
     }
     return true;

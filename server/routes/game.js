@@ -13,7 +13,6 @@ function getChallengerUsername(req) {
 // make sure the username exists
 function validateUsername(username, res) {
     if (!username) {
-        res.status(400).json({ message: 'Username is required.' });
         return false;
     }
     return true;
@@ -87,7 +86,8 @@ router.post('/move', async (req, res) => {
         }
     
         // Validate input
-        if (!validateUsername(username, res)) return;
+        if (!validateUsername(username))
+            return res.status(400).json({ message: 'Username invalid.' });
     
         // Check if the account exists
         const account = await db.loadAccount(username);
