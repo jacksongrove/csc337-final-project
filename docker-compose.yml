@@ -15,6 +15,7 @@ services:
       - .env
     networks:
       - app-network
+    restart: always # Automatically restart on crash
 
   mongodb:
     image: mongo:6
@@ -26,6 +27,7 @@ services:
       - mongo-data:/data/db # Persistent storage for MongoDB
     networks:
       - app-network
+    restart: always # Automatically restart on crash
 
 # Network super required because the nodejs frontend needs to communicate with
 # the backend database
